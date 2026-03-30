@@ -1,0 +1,3911 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>写作高效学习 · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f5f0e8;
+    --ink: #1a1510;
+    --accent: #c85a1e;
+    --gold: #b8960c;
+    --muted: #8a7e6e;
+    --card-bg: #faf7f2;
+    --border: #d4c9b5;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .hero-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero h1 span::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 3rem;
+    max-width: 480px;
+    line-height: 1.8;
+  }
+
+  .hero-infinite {
+    font-family: 'Space Mono', monospace;
+    font-size: 4rem;
+    color: var(--border);
+    position: absolute;
+    bottom: 2rem;
+    right: 3rem;
+    line-height: 1;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+  }
+
+  /* ─── START BUTTON ─── */
+  .btn-start {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-start:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  /* ─── PROLOGUE ─── */
+  .prologue {
+    background: #f0ebe0;
+    border-bottom: 2px solid var(--ink);
+    padding: 5rem 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .prologue-inner {
+    max-width: 640px;
+    width: 100%;
+  }
+
+  .prologue-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .prologue-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .prologue-line {
+    font-size: 1.05rem;
+    line-height: 2;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+    min-height: 1.8em;
+  }
+
+  .prologue-line.bold {
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .prologue-line.accent {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .prologue-line.sheep {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .prologue-spacer {
+    height: 1.2rem;
+  }
+
+  .prologue-blockquote {
+    margin: 1.8rem 0;
+    padding: 1.2rem 1.5rem;
+    border-left: 3px solid var(--gold);
+    background: rgba(184,150,12,0.05);
+  }
+
+  .prologue-blockquote p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--ink);
+    font-weight: 300;
+  }
+
+  .prologue-blockquote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  /* ─── PHILOSOPHY STRIP ─── */
+  .philosophy {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .philo-item {
+    padding: 2.5rem 2rem;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .philo-item:last-child { border-right: none; }
+
+  .philo-quote {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .philo-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ─── DAYS SECTION ─── */
+  .days-section {
+    padding: 5rem 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+    font-weight: 900;
+  }
+
+  .section-header span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+  }
+
+  /* ─── DAY CARDS ─── */
+  .days-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .day-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    background: var(--card-bg);
+    transition: all 0.25s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .day-card:last-child { border-bottom: 1px solid var(--border); }
+
+  .day-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--border);
+    transition: all 0.25s;
+  }
+
+  .day-card:hover::before,
+  .day-card.active::before {
+    background: var(--accent);
+    width: 6px;
+  }
+
+  .day-card:hover {
+    background: #fff;
+    z-index: 1;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .day-card.locked {
+    opacity: 0.45;
+    cursor: pointer;
+  }
+
+  .day-card.active {
+    background: #fff;
+    border-color: var(--accent);
+    z-index: 2;
+    box-shadow: 0 4px 24px rgba(200,90,30,0.12);
+  }
+
+  .day-number-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1.5rem 0.5rem 1.5rem 1rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .day-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .day-num {
+    font-size: 2.2rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .day-card.active .day-num,
+  .day-card:hover .day-num {
+    color: var(--accent);
+  }
+
+  .day-status {
+    margin-top: 0.5rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+  }
+
+  .day-status.done {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: white;
+  }
+
+  .day-status.active-dot {
+    background: var(--accent);
+    border-color: var(--accent);
+    animation: breathe 2s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  .day-content {
+    padding: 1.5rem;
+  }
+
+  .day-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.15rem 0.4rem;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+  }
+
+  .day-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .day-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .day-detail {
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--border);
+  }
+
+  .day-card.active .day-detail {
+    display: block;
+  }
+
+  .detail-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .detail-list li {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    padding-left: 1.2rem;
+    position: relative;
+    color: var(--ink);
+  }
+
+  .detail-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  .day-action {
+    margin-top: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+    cursor: pointer;
+    transition: gap 0.2s;
+  }
+
+  .day-action:hover { gap: 0.8rem; }
+
+  /* ─── FLOW DIAGRAM ─── */
+  .flow-section {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 5rem 2rem;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .flow-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .flow-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .flow-headline {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  .flow-headline em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .flow-nodes {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .flow-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .node-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    transition: all 0.3s;
+    cursor: pointer;
+    background: transparent;
+    color: var(--bg);
+  }
+
+  .node-circle.highlight {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 0 20px rgba(200,90,30,0.4);
+  }
+
+  .node-circle:hover {
+    border-color: var(--bg);
+    transform: scale(1.1);
+  }
+
+  .node-label {
+    font-size: 0.7rem;
+    text-align: center;
+    color: var(--muted);
+    max-width: 60px;
+    line-height: 1.4;
+  }
+
+  .flow-arrow {
+    font-family: 'Space Mono', monospace;
+    color: var(--muted);
+    padding: 0 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+  }
+
+  .flow-loop {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .loop-icon {
+    font-size: 1.8rem;
+    color: var(--gold);
+  }
+
+  /* ─── FOOTER CTA ─── */
+  .footer-cta {
+    padding: 5rem 2rem;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .footer-cta h2 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .footer-cta p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .footer-note {
+    margin-top: 3rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--border);
+    text-transform: uppercase;
+  }
+
+  /* ─── JOURNEY LINE ─── */
+  .day-journey {
+    font-size: 0.78rem;
+    color: var(--gold);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--gold);
+  }
+
+  /* ─── CREATIVITY STAGES ─── */
+  .creativity-section {
+    padding: 5rem 2rem;
+    background: var(--ink);
+    color: var(--bg);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .creativity-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .creativity-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .creativity-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .creativity-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+  }
+
+  .creativity-title em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .creativity-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .c-card {
+    padding: 2rem 1.5rem 2rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+  }
+
+  .c-card:last-child { border-right: none; }
+
+  .c-card:hover { background: rgba(255,255,255,0.04); }
+
+  .c-card-bg {
+    position: absolute;
+    bottom: -0.5rem;
+    right: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 5.5rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .c-card-bar {
+    height: 3px;
+    width: 32px;
+    margin-bottom: 1.5rem;
+  }
+
+  .c-card:nth-child(1) .c-card-bar { background: var(--accent); }
+  .c-card:nth-child(2) .c-card-bar { background: var(--gold); }
+  .c-card:nth-child(3) .c-card-bar { background: #e8c040; }
+  .c-card:nth-child(4) .c-card-bar { background: #7ab88a; }
+
+  .c-card-en {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .c-card-name {
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .c-card-desc {
+    font-size: 0.8rem;
+    color: rgba(245,240,232,0.5);
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  .c-card-desc strong {
+    color: var(--bg);
+    font-weight: 700;
+  }
+
+  .creativity-caption {
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(200,90,30,0.06);
+  }
+
+  .creativity-caption-text {
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.5);
+    line-height: 1.9;
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .creativity-caption-text strong {
+    color: var(--bg);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .creativity-cards { grid-template-columns: repeat(2, 1fr); }
+    .c-card:nth-child(2) { border-right: none; }
+    .c-card:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.1); }
+    .c-card:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.1); }
+  }
+
+  /* ─── MINIMUM RESISTANCE PATH ─── */
+  .tension-section {
+    padding: 5rem 2rem;
+    background: var(--bg);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .tension-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .tension-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .tension-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .tension-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .tension-title em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* two columns */
+  .tension-columns {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    align-items: stretch;
+    border: 2px solid var(--ink);
+    min-height: 280px;
+  }
+
+  .tension-col {
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+
+  .tension-col.vision {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .tension-col.reality {
+    background: var(--card-bg);
+    color: var(--ink);
+  }
+
+  .tension-col-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .tension-col.vision .tension-col-label { color: var(--muted); }
+  .tension-col.reality .tension-col-label { color: var(--muted); }
+
+  .tension-col-cn {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 0.4rem;
+    line-height: 1;
+  }
+
+  .tension-col.vision .tension-col-cn { color: var(--accent); }
+  .tension-col.reality .tension-col-cn { color: var(--ink); }
+
+  .tension-col-en {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+
+  .tension-col.vision .tension-col-en { color: rgba(245,240,232,0.3); }
+  .tension-col.reality .tension-col-en { color: var(--border); }
+
+  .tension-col-desc {
+    font-size: 0.88rem;
+    line-height: 1.9;
+    font-weight: 300;
+  }
+
+  .tension-col.vision .tension-col-desc { color: rgba(245,240,232,0.65); }
+  .tension-col.reality .tension-col-desc { color: var(--muted); }
+
+  .tension-col-desc strong {
+    font-weight: 700;
+  }
+
+  .tension-col.vision .tension-col-desc strong { color: var(--bg); }
+  .tension-col.reality .tension-col-desc strong { color: var(--ink); }
+
+  /* middle tension bar */
+  .tension-middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    position: relative;
+    gap: 0.5rem;
+  }
+
+  .tension-middle-word {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.9);
+    writing-mode: vertical-lr;
+  }
+
+  .tension-middle-arrow {
+    color: white;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* bottom insight */
+  .tension-insight {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 3px 1fr;
+    gap: 1.2rem;
+    align-items: start;
+  }
+
+  .tension-insight-bar {
+    background: var(--accent);
+    height: 100%;
+    min-height: 48px;
+  }
+
+  .tension-insight-text {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--ink);
+    font-weight: 300;
+  }
+
+  .tension-insight-text strong {
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  @media (max-width: 640px) {
+    .tension-columns {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 20px 1fr;
+    }
+    .tension-middle {
+      flex-direction: row;
+      writing-mode: initial;
+    }
+    .tension-middle-word {
+      writing-mode: initial;
+      transform: none;
+    }
+  }
+
+  /* ─── CURATION CONTRAST ─── */
+  .curation-section {
+    padding: 5rem 2rem;
+    background: var(--bg);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .curation-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .curation-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .curation-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .curation-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .curation-title em { color: var(--gold); font-style: normal; }
+
+  .curation-diagram {
+    width: 100%;
+  }
+
+  .curation-diagram svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .curation-caption {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .curation-caption-col {
+    padding: 1.2rem 1.5rem;
+    background: var(--card-bg);
+  }
+
+  .curation-caption-col.gold-side { background: #fdf8ec; }
+
+  .curation-caption-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .curation-caption-text {
+    font-size: 0.82rem;
+    line-height: 1.75;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .curation-caption-text strong { color: var(--ink); font-weight: 700; }
+
+  .curation-insight {
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    background: var(--ink);
+    color: var(--bg);
+    display: grid;
+    grid-template-columns: 3px 1fr;
+    gap: 1.2rem;
+  }
+
+  .curation-insight-bar { background: var(--gold); }
+
+  .curation-insight-text {
+    font-size: 0.88rem;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.7);
+    font-weight: 300;
+  }
+
+  .curation-insight-text strong { color: var(--bg); font-weight: 700; }
+
+  /* ─── EMERSON QUOTE ─── */
+  .emerson-section {
+    padding: 6rem 2rem;
+    background: var(--card-bg);
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .emerson-section::before {
+    content: 'SELF\ARELIANCE';
+    white-space: pre;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 700;
+    color: rgba(26,21,16,0.035);
+    line-height: 1.1;
+    text-align: center;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+  }
+
+  .emerson-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .emerson-source-top {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .emerson-deco {
+    font-size: 5rem;
+    color: var(--ink);
+    line-height: 0.7;
+    margin-bottom: 1.8rem;
+    font-family: Georgia, serif;
+    opacity: 0.15;
+  }
+
+  .emerson-text {
+    font-size: 1.15rem;
+    line-height: 2;
+    font-weight: 400;
+    color: var(--ink);
+    font-style: normal;
+  }
+
+  .emerson-text-2 {
+    font-size: 1rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .emerson-divider-line {
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+    margin: 2rem 0;
+  }
+
+  .emerson-source-bottom {
+    margin-top: 2.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+
+  /* ─── LOOP DIAGRAM ─── */
+  .loop-section {
+    padding: 5rem 2rem;
+    background: var(--bg);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .loop-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .loop-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .loop-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .loop-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .loop-title em { color: var(--accent); font-style: normal; }
+
+  .loop-diagram-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .loop-diagram-wrap svg {
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* ─── CURATION SECTION ─── */
+  .curation-section {
+    padding: 5rem 2rem;
+    background: var(--bg);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .curation-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .curation-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .curation-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .curation-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .curation-title em { color: var(--gold); font-style: normal; }
+
+  /* comparison grid */
+  .curation-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 2px solid var(--ink);
+    margin-bottom: 2rem;
+  }
+
+  .curation-col {
+    padding: 2.2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .curation-col.gold-side {
+    background: var(--ink);
+    border-right: 2px solid var(--ink);
+  }
+
+  .curation-col.silver-side {
+    background: var(--card-bg);
+  }
+
+  .curation-col-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid;
+  }
+
+  .gold-side .curation-col-tag {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .silver-side .curation-col-tag {
+    color: var(--muted);
+    border-color: var(--border);
+  }
+
+  .curation-col-title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+  }
+
+  .gold-side .curation-col-title { color: var(--gold); }
+  .silver-side .curation-col-title { color: var(--ink); }
+
+  .curation-col-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.8rem;
+  }
+
+  .gold-side .curation-col-sub { color: rgba(184,150,12,0.5); }
+  .silver-side .curation-col-sub { color: var(--border); }
+
+  /* nugget grid */
+  .nugget-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 1.5rem;
+  }
+
+  .nugget {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    transition: transform 0.2s;
+    cursor: default;
+  }
+
+  .nugget:hover { transform: scale(1.15); }
+
+  .nugget.au {
+    background: var(--gold);
+    color: rgba(0,0,0,0.6);
+  }
+
+  .nugget.ag {
+    background: #c8c8c0;
+    color: rgba(0,0,0,0.4);
+  }
+
+  .nugget.ag.dim {
+    background: rgba(200,200,192,0.3);
+    color: rgba(100,100,100,0.4);
+    border: 1px solid rgba(200,200,192,0.2);
+  }
+
+  .curation-col-desc {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .gold-side .curation-col-desc { color: rgba(245,240,232,0.55); }
+  .silver-side .curation-col-desc { color: var(--muted); }
+
+  .curation-col-desc strong {
+    font-weight: 700;
+  }
+
+  .gold-side .curation-col-desc strong { color: var(--gold); }
+  .silver-side .curation-col-desc strong { color: var(--ink); }
+
+  /* legend */
+  .nugget-legend {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  .gold-side .legend-item { color: rgba(245,240,232,0.4); }
+  .silver-side .legend-item { color: var(--muted); }
+
+  /* bottom insight */
+  .curation-insight {
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.2rem;
+    align-items: center;
+    background: #fdf9f0;
+  }
+
+  .curation-insight-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .curation-insight-text {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .curation-insight-text strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .curation-compare { grid-template-columns: 1fr; }
+    .curation-col.gold-side { border-right: none; border-bottom: 2px solid var(--ink); }
+    .nugget-grid { grid-template-columns: repeat(5, 1fr); }
+  }
+
+  /* ─── ROBERT FRITZ ─── */
+  .fritz-section {
+    padding: 5rem 2rem;
+    background: var(--ink);
+    color: var(--bg);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .fritz-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .fritz-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .fritz-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .fritz-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 900;
+    line-height: 1.2;
+  }
+
+  .fritz-title em { color: var(--accent); font-style: normal; }
+
+  /* three insight cards */
+  .fritz-insights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 3.5rem;
+  }
+
+  .fritz-insight-card {
+    padding: 2rem 1.6rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+  }
+
+  .fritz-insight-card:last-child { border-right: none; }
+
+  .fritz-insight-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .fritz-insight-text {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.7);
+    font-weight: 300;
+  }
+
+  .fritz-insight-text strong { color: var(--bg); font-weight: 700; }
+
+  /* diagram */
+  .fritz-diagram {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    margin-bottom: 3rem;
+  }
+
+  .fritz-diagram svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* source */
+  .fritz-source {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .fritz-insights { grid-template-columns: 1fr; }
+    .fritz-insight-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .fritz-diagram { height: 240px; }
+  }
+
+  /* ─── CHOICE STRUCTURE DIAGRAM ─── */
+  .choice-section {
+    padding: 5rem 2rem;
+    background: var(--card-bg);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .choice-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .choice-header {
+    margin-bottom: 4rem;
+  }
+
+  .choice-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .choice-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .choice-title em { color: var(--accent); font-style: normal; }
+
+  /* pyramid layers */
+  .choice-pyramid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  /* vertical spine line */
+  .choice-pyramid::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--border) 0px,
+      var(--border) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+
+  .choice-layer {
+    display: grid;
+    grid-template-columns: 1fr 48px 1fr;
+    align-items: stretch;
+    position: relative;
+    z-index: 1;
+  }
+
+  .choice-layer + .choice-layer {
+    margin-top: 0;
+  }
+
+  /* left side = label */
+  .choice-left {
+    padding: 2rem 2rem 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    text-align: right;
+    border-right: none;
+  }
+
+  /* right side = example */
+  .choice-right {
+    padding: 2rem 0 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: none;
+  }
+
+  /* center node */
+  .choice-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .choice-node-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: var(--card-bg);
+    flex-shrink: 0;
+  }
+
+  /* layer-specific colours */
+  .choice-layer.l1 .choice-node-dot { background: var(--ink); border-color: var(--ink); }
+  .choice-layer.l2 .choice-node-dot { background: var(--accent); border-color: var(--accent); }
+  .choice-layer.l3 .choice-node-dot { background: var(--gold); border-color: var(--gold); }
+
+  .choice-tier {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .choice-name {
+    font-size: 1.25rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .choice-layer.l1 .choice-name { color: var(--ink); }
+  .choice-layer.l2 .choice-name { color: var(--accent); }
+  .choice-layer.l3 .choice-name { color: var(--gold); }
+
+  .choice-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 260px;
+  }
+
+  .choice-left .choice-desc { margin-left: auto; }
+
+  .choice-example-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--border);
+    margin-bottom: 0.4rem;
+  }
+
+  .choice-example-text {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+    font-style: italic;
+    max-width: 260px;
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--border);
+  }
+
+  /* connector arrows between layers */
+  .choice-connector {
+    display: grid;
+    grid-template-columns: 1fr 48px 1fr;
+    height: 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .choice-connector-mid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .choice-connector-label {
+    display: flex;
+    align-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    color: var(--border);
+    text-transform: uppercase;
+  }
+
+  .choice-connector-label.right { padding-left: 1.2rem; }
+  .choice-connector-label.left  { justify-content: flex-end; padding-right: 1.2rem; }
+
+  /* bottom insight */
+  .choice-insight {
+    margin-top: 3rem;
+    padding: 1.8rem 2rem;
+    background: var(--ink);
+    color: var(--bg);
+    display: grid;
+    grid-template-columns: 3px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .choice-insight-bar { background: var(--accent); min-height: 100%; }
+
+  .choice-insight-text {
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.7);
+    font-weight: 300;
+  }
+
+  .choice-insight-text strong {
+    color: var(--bg);
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .choice-layer { grid-template-columns: 1fr 32px; }
+    .choice-right { display: none; }
+    .choice-left { text-align: left; align-items: flex-start; padding: 1.5rem 0 1.5rem 1.2rem; }
+    .choice-left .choice-desc { margin-left: 0; }
+    .choice-connector { grid-template-columns: 1fr 32px; }
+  }
+
+  /* ─── JUNG QUOTE ─── */
+  .jung-section {
+    padding: 5rem 2rem;
+    background: #1e1a14;
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .jung-section::before {
+    content: 'SHADOW';
+    position: absolute;
+    bottom: -1rem;
+    right: -1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 700;
+    color: rgba(255,255,255,0.025);
+    line-height: 1;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+  }
+
+  .jung-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .jung-lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .jung-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    background: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .jung-btn.active {
+    color: var(--bg);
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+
+  .jung-btn:hover:not(.active) {
+    border-color: rgba(255,255,255,0.3);
+    color: var(--bg);
+  }
+
+  .jung-divider {
+    color: var(--muted);
+    font-size: 0.7rem;
+  }
+
+  .jung-deco {
+    font-size: 4rem;
+    color: var(--accent);
+    line-height: 0.8;
+    margin-bottom: 1.5rem;
+    font-family: Georgia, serif;
+  }
+
+  .jung-text {
+    font-size: 1.05rem;
+    line-height: 2;
+    font-weight: 300;
+    color: rgba(245,240,232,0.75);
+    font-style: normal;
+    margin-bottom: 1.5rem;
+    display: none;
+  }
+
+  .jung-text.active { display: block; }
+
+  .jung-text.en {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.88rem;
+    line-height: 2;
+    color: rgba(245,240,232,0.6);
+  }
+
+  .jung-text.zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.05rem;
+    line-height: 2;
+  }
+
+  .jung-source {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+
+  /* ─── WWHW SECTION ─── */
+  .wwhw-section {
+    padding: 5rem 2rem;
+    background: var(--bg);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .wwhw-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .wwhw-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .wwhw-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .wwhw-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .wwhw-title span {
+    color: var(--accent);
+  }
+
+  .wwhw-subtitle {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .wwhw-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 2px solid var(--ink);
+  }
+
+  .wwhw-card {
+    padding: 2.2rem 2rem;
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+    background: var(--card-bg);
+    transition: background 0.2s;
+    overflow: hidden;
+  }
+
+  .wwhw-card:nth-child(2),
+  .wwhw-card:nth-child(4) {
+    border-right: none;
+  }
+
+  .wwhw-card:nth-child(3),
+  .wwhw-card:nth-child(4) {
+    border-bottom: none;
+  }
+
+  .wwhw-card:hover {
+    background: #fff;
+  }
+
+  .wwhw-card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--border);
+    line-height: 1;
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+
+  .wwhw-card:hover .wwhw-card-num {
+    color: rgba(200,90,30,0.1);
+  }
+
+  .wwhw-card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .wwhw-card-letter {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+    line-height: 1;
+  }
+
+  .wwhw-card-label {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+    position: relative;
+    z-index: 1;
+  }
+
+  .wwhw-card-body {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.9;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  .wwhw-card-body strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .wwhw-footer {
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    border: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .wwhw-footer-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .wwhw-footer-text {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .wwhw-footer-text strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .wwhw-grid { grid-template-columns: 1fr; }
+    .wwhw-card { border-right: none; }
+    .wwhw-card:nth-child(3) { border-bottom: 1px solid var(--ink); }
+  }
+
+  /* ─── RESISTANCE DIAGRAM ─── */
+  .resistance-section {
+    padding: 5rem 2rem;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .resistance-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .resistance-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .resistance-header .res-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .resistance-header h3 {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+
+  /* diagram */
+  .res-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+    min-height: 320px;
+  }
+
+  /* center node */
+  .res-center {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  }
+
+  /* satellite nodes */
+  .res-satellites {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .res-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    pointer-events: all;
+  }
+
+  .res-node-circle {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: default;
+  }
+
+  .res-node-circle:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 24px rgba(200,90,30,0.2);
+  }
+
+  .res-node-main {
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .res-node-sub {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-weight: 300;
+    margin-top: 0.2rem;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* arrows as SVG overlay */
+  .res-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  /* bottom caption */
+  .res-caption {
+    margin-top: 3rem;
+    padding: 1.2rem 1.8rem;
+    background: var(--ink);
+    color: var(--bg);
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+  }
+
+  .res-caption em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* ─── QUOTE SECTION ─── */
+  .quote-section {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 6rem 2rem;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-section::before {
+    content: 'The Alchemist';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(3rem, 10vw, 8rem);
+    color: rgba(255,255,255,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+  }
+
+  .quote-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .quote-deco {
+    font-size: 5rem;
+    color: var(--accent);
+    line-height: 0.8;
+    margin-bottom: 1.5rem;
+    font-family: Georgia, serif;
+  }
+
+  .quote-text {
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+    font-weight: 700;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+    font-style: normal;
+  }
+
+  .quote-source {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .quote-bridge {
+    font-size: 0.95rem;
+    color: rgba(245,240,232,0.5);
+    font-weight: 300;
+    line-height: 1.8;
+    font-style: italic;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .quote-divider {
+    width: 1px;
+    height: 4rem;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.18), transparent);
+    margin: 3.5rem auto;
+  }
+
+  .quote-block-2 .quote-deco {
+    color: var(--gold);
+  }
+
+  .quote-block-3 {
+    background: var(--bg);
+    padding: 3rem 2.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .quote-block-3 .quote-deco {
+    color: var(--accent);
+  }
+
+  .quote-block-3 .quote-text {
+    color: var(--ink);
+  }
+
+  .quote-block-3 .quote-source {
+    color: var(--accent);
+  }
+
+  .quote-block-3 .quote-bridge {
+    color: var(--muted);
+    border-top-color: var(--border);
+  }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent);
+    z-index: 1000;
+    transition: width 0.1s;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .philosophy { grid-template-columns: 1fr; }
+    .philo-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .flow-nodes { justify-content: center; }
+    .hero h1 { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<!-- Fixed top bar -->
+<style>
+  #top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  #top-bar-inner {
+    width: 100%;
+    max-width: 900px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #top-title {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  #top-title .zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+  #top-title .en {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  #contact-btn, #contact-popup {
+    position: static;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 0.5rem 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+    z-index: 1001;
+  }
+  #contact-btn:hover {
+    background: var(--ink);
+    transform: translateY(-2px);
+    box-shadow: 3px 3px 0 var(--accent);
+  }
+  #contact-popup {
+    display: none;
+    cursor: default;
+  }
+  body {
+    padding-top: 52px;
+  }
+</style>
+
+<div id="top-bar">
+  <div id="top-bar-inner">
+    <div id="top-title">
+      <span class="zh">自由创作者之路</span>
+      <span class="en">The Path of the Free Creator</span>
+    </div>
+    <div id="contact-btn">联系云不见</div>
+    <div id="contact-popup">微信：yunbujian3</div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var btn = document.getElementById('contact-btn');
+    var pop = document.getElementById('contact-popup');
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      btn.style.display = 'none';
+      pop.style.display = 'block';
+    });
+  })();
+</script>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">2026 · 写作实践小组 · Create First</div>
+  <h1>从<span>写作</span>开始<br>高效学习任何领域</h1>
+  <p class="hero-sub">
+    不需要阅读多少书单，学过什么课程。<br>
+    就像3岁的小孩拿起画笔，自然而然开始涂画。<br>
+    写作即思考。下笔开始，并且津津有味。
+  </p>
+  <a class="btn-start" onclick="scrollToDays()">开 始 行 动 →</a>
+  <div class="hero-infinite">∞</div>
+</section>
+
+<!-- PROLOGUE -->
+<section class="prologue" id="prologue">
+  <div class="prologue-inner">
+    <div class="prologue-label">🐑 序章：你为什么来到这里？</div>
+    <div id="prologue-lines"></div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy">
+  <div class="philo-item">
+    <div class="philo-quote">你享受的是游戏的过程</div>
+    <div class="philo-sub">终极目标无法被植入<br>只能被唤醒</div>
+  </div>
+  <div class="philo-item">
+    <div class="philo-quote">写得清楚<br>才意味着想得清楚</div>
+    <div class="philo-sub">从"知道"到"做到"<br>再到"改变命运"</div>
+  </div>
+  <div class="philo-item">
+    <div class="philo-quote">你的唯一目标<br>是发现自己是谁</div>
+    <div class="philo-sub">在追求的过程中<br>获得安定与自由</div>
+  </div>
+</section>
+
+<!-- DAYS -->
+<!-- LOOP DIAGRAM -->
+<section class="loop-section">
+  <div class="loop-inner">
+    <div class="loop-header">
+      <div class="loop-eyebrow">Course Framework · 课程框架</div>
+      <div class="loop-title">最小阻力之路 · <em>完整框架</em></div>
+    </div>
+    <div class="loop-diagram-wrap" style="overflow-x:visible; width:100%;">
+      <svg viewBox="0 0 960 600" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="display:block; max-width:960px; margin:0 auto;"preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="lp-dk"   markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#1a1510"/></marker>
+          <marker id="lp-ac"   markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#c85a1e"/></marker>
+          <marker id="lp-go"   markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#b8960c"/></marker>
+          <marker id="lp-ac-l" markerWidth="7" markerHeight="7" refX="2" refY="3" orient="auto"><path d="M7,0 L7,6 L0,3z" fill="#c85a1e"/></marker>
+        </defs>
+
+        <!-- ══ LEFT COLUMN ══ -->
+
+        <!-- 共享工具区（最上，指向写作+策展） -->
+        <rect x="16" y="16" width="220" height="148" rx="3" fill="rgba(140,120,90,0.07)" stroke="#d4c9b5" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="126" y="33" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" letter-spacing="2" fill="#8a7e6e">共享工具 · SHARED TOOLS</text>
+
+        <!-- 最大困惑 -->
+        <rect x="30" y="40" width="192" height="40" rx="2" fill="#1a1510"/>
+        <text x="126" y="57" text-anchor="middle" font-size="12" font-weight="900" fill="#f5f0e8" font-family="Noto Serif SC,serif">最大的困惑</text>
+        <text x="126" y="71" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="rgba(245,240,232,0.35)" letter-spacing="1">SEED · 学习起点</text>
+
+        <!-- 最小可用框架 -->
+        <rect x="30" y="92" width="192" height="40" rx="2" fill="none" stroke="#d4c9b5" stroke-width="1.5"/>
+        <text x="126" y="109" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1510" font-family="Noto Serif SC,serif">最小可用框架</text>
+        <text x="126" y="123" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#8a7e6e" letter-spacing="1">幂律 · 贝叶斯</text>
+
+        <!-- 分叉箭头：最小可用框架 → 写作 & 策展 -->
+        <!-- 左叉 → 写作 (下偏左) -->
+        <path d="M96,132 L96,158" fill="none" stroke="#8a7e6e" stroke-width="1.5" marker-end="url(#lp-dk)"/>
+        <!-- 右叉 → 策展 (下偏右，更长) -->
+        <path d="M156,132 L156,158" fill="none" stroke="#8a7e6e" stroke-width="1.5" marker-end="url(#lp-ac)"/>
+        <text x="126" y="148" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#8a7e6e">↙ 同时服务 ↘</text>
+
+        <!-- ══ 写作工具组 ══ -->
+        <rect x="16" y="162" width="220" height="180" rx="3" fill="rgba(26,21,16,0.04)" stroke="#1a1510" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="126" y="179" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" letter-spacing="2" fill="rgba(26,21,16,0.35)">写作工具 · WRITING TOOLS</text>
+
+        <!-- W1: 快速/自由写作 -->
+        <rect x="30" y="186" width="192" height="36" rx="2" fill="none" stroke="rgba(26,21,16,0.2)" stroke-width="1"/>
+        <text x="126" y="201" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1510" font-family="Noto Serif SC,serif">快速 / 自由写作</text>
+        <text x="126" y="214" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#8a7e6e" letter-spacing="1">写作与编辑分离</text>
+
+        <!-- W2+W3 -->
+        <rect x="30" y="232" width="90" height="34" rx="2" fill="none" stroke="rgba(26,21,16,0.2)" stroke-width="1"/>
+        <text x="75" y="247" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1510" font-family="Noto Serif SC,serif">WWHW</text>
+        <text x="75" y="259" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#8a7e6e">框架</text>
+
+        <rect x="132" y="232" width="90" height="34" rx="2" fill="none" stroke="rgba(26,21,16,0.2)" stroke-width="1"/>
+        <text x="177" y="247" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1510" font-family="Noto Serif SC,serif">列大纲</text>
+        <text x="177" y="259" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#8a7e6e">OUTLINE</text>
+
+        <text x="126" y="285" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#8a7e6e">↓ 用于</text>
+
+        <!-- ② 写作·思考 -->
+        <rect x="30" y="292" width="192" height="44" rx="2" fill="#1a1510"/>
+        <text x="126" y="311" text-anchor="middle" font-size="13" font-weight="900" fill="#f5f0e8" font-family="Noto Serif SC,serif">② 写作 · 思考</text>
+        <text x="126" y="327" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="rgba(245,240,232,0.4)" letter-spacing="1">生成思想 · 双向过程</text>
+
+        <!-- ══ 策展工具组（紧接写作下方） ══ -->
+        <rect x="16" y="352" width="220" height="148" rx="3" fill="rgba(200,90,30,0.04)" stroke="#c85a1e" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="126" y="369" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" letter-spacing="2" fill="rgba(200,90,30,0.5)">策展工具 · CURATION TOOLS</text>
+
+        <!-- ① 策展 — 第一位 -->
+        <rect x="30" y="374" width="192" height="44" rx="2" fill="#c85a1e"/>
+        <text x="126" y="393" text-anchor="middle" font-size="13" font-weight="900" fill="white" font-family="Noto Serif SC,serif">① 策展</text>
+        <text x="126" y="409" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="rgba(255,255,255,0.6)" letter-spacing="1">CURATION · INPUT</text>
+
+        <!-- 联系网络 + AI 辅助 -->
+        <rect x="30" y="428" width="90" height="34" rx="2" fill="none" stroke="rgba(200,90,30,0.3)" stroke-width="1"/>
+        <text x="75" y="443" text-anchor="middle" font-size="10" font-weight="700" fill="#c85a1e" font-family="Noto Serif SC,serif">联系网络</text>
+        <text x="75" y="455" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#8a7e6e">NETWORK</text>
+
+        <rect x="132" y="428" width="90" height="34" rx="2" fill="none" stroke="rgba(200,90,30,0.3)" stroke-width="1"/>
+        <text x="177" y="443" text-anchor="middle" font-size="10" font-weight="700" fill="#c85a1e" font-family="Noto Serif SC,serif">AI 辅助</text>
+        <text x="177" y="455" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#8a7e6e">ASSIST</text>
+
+        <!-- 写作 ↕ 策展 双向箭头 -->
+        <line x1="100" y1="336" x2="100" y2="372" stroke="#1a1510" stroke-width="1.5" marker-end="url(#lp-ac)"/>
+        <line x1="152" y1="372" x2="152" y2="338" stroke="#c85a1e" stroke-width="1.5" marker-end="url(#lp-dk)"/>
+        <rect x="106" y="346" width="38" height="15" rx="2" fill="#f5f0e8"/>
+        <text x="125" y="357" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#8a7e6e">双向</text>
+
+        <!-- ══ RIGHT: CORE LOOP ══ -->
+        <rect x="414" y="16" width="530" height="568" rx="3" fill="rgba(200,90,30,0.02)" stroke="#c85a1e" stroke-width="1" stroke-dasharray="5,4"/>
+        <text x="679" y="34" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" letter-spacing="2" fill="rgba(200,90,30,0.4)">CORE LOOP · 核心循环</text>
+
+        <!-- 创作者身份认同 top right -->
+        <rect x="724" y="42" width="204" height="78" rx="2" fill="rgba(184,150,12,0.07)" stroke="#b8960c" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="826" y="65" text-anchor="middle" font-size="13" font-weight="900" fill="#b8960c" font-family="Noto Serif SC,serif">创作者</text>
+        <text x="826" y="83" text-anchor="middle" font-size="9" fill="#8a7e6e" font-family="Noto Serif SC,serif">身份认同 · 内在驱动</text>
+        <text x="826" y="99" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="rgba(184,150,12,0.4)" letter-spacing="1">IDENTITY · NOT WILLPOWER</text>
+
+        <!-- 身份认同 → 公开发表 -->
+        <path d="M724,81 L692,81 L692,122" fill="none" stroke="#b8960c" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#lp-go)"/>
+        <text x="706" y="100" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#b8960c" opacity="0.7">驱动</text>
+
+        <!-- R1: 公开发表 -->
+        <rect x="430" y="124" width="262" height="48" rx="2" fill="#1a1510"/>
+        <text x="561" y="145" text-anchor="middle" font-size="13" font-weight="900" fill="#f5f0e8" font-family="Noto Serif SC,serif">公开发表（图文）</text>
+        <text x="561" y="162" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(245,240,232,0.35)" letter-spacing="1">PUBLISH · CREATE FIRST</text>
+
+        <line x1="561" y1="172" x2="561" y2="212" stroke="#1a1510" stroke-width="1.5" marker-end="url(#lp-dk)"/>
+        <text x="572" y="198" font-family="Space Mono,monospace" font-size="8" fill="#8a7e6e">反馈</text>
+
+        <!-- R2: 愿景 -->
+        <rect x="430" y="214" width="262" height="48" rx="2" fill="none" stroke="#1a1510" stroke-width="2"/>
+        <text x="561" y="235" text-anchor="middle" font-size="13" font-weight="900" fill="#1a1510" font-family="Noto Serif SC,serif">愿景（Vision）</text>
+        <text x="561" y="253" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#8a7e6e" letter-spacing="1">你想成为什么样的人</text>
+
+        <!-- 张力 bar between 愿景 and 现实 -->
+        <rect x="490" y="264" width="142" height="20" rx="2" fill="#c85a1e"/>
+        <text x="561" y="278" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" font-weight="700" fill="white" letter-spacing="2">↕ 张力 · 内阻力 ↕</text>
+        <line x1="430" y1="262" x2="430" y2="286" stroke="#c85a1e" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="692" y1="262" x2="692" y2="286" stroke="#c85a1e" stroke-width="1" stroke-dasharray="2,2"/>
+
+        <!-- R3: 现实 -->
+        <rect x="430" y="286" width="262" height="48" rx="2" fill="none" stroke="#c85a1e" stroke-width="2"/>
+        <text x="561" y="307" text-anchor="middle" font-size="13" font-weight="900" fill="#c85a1e" font-family="Noto Serif SC,serif">现实（Reality）</text>
+        <text x="561" y="325" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#8a7e6e" letter-spacing="1">当前状态</text>
+
+        <line x1="561" y1="334" x2="561" y2="374" stroke="#c85a1e" stroke-width="1.5" marker-end="url(#lp-ac)"/>
+
+        <!-- R4: 现实 + 资源 -->
+        <rect x="430" y="376" width="262" height="56" rx="2" fill="none" stroke="#c85a1e" stroke-width="1.5"/>
+        <text x="561" y="397" text-anchor="middle" font-size="12" font-weight="900" fill="#c85a1e" font-family="Noto Serif SC,serif">现实 + 资源</text>
+        <text x="561" y="413" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#8a7e6e" letter-spacing="1">策展 + 写作 = 人人皆有</text>
+        <text x="561" y="426" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(200,90,30,0.45)" letter-spacing="1">FAST ITERATION</text>
+
+        <line x1="561" y1="432" x2="561" y2="466" stroke="#b8960c" stroke-width="1.5" marker-end="url(#lp-go)"/>
+
+        <!-- R5: 迭代复利 -->
+        <rect x="474" y="468" width="174" height="42" rx="2" fill="none" stroke="#b8960c" stroke-width="2"/>
+        <text x="561" y="487" text-anchor="middle" font-size="13" font-weight="900" fill="#b8960c" font-family="Noto Serif SC,serif">迭代复利 ∞</text>
+        <text x="561" y="503" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#b8960c" opacity="0.45" letter-spacing="1">COMPOUND · INFINITE GAME</text>
+
+        <!-- R5 → R1 右侧回路 -->
+        <path d="M648,489 L920,489 L920,148 L694,148" fill="none" stroke="#b8960c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#lp-go)"/>
+        <text x="874" y="483" font-family="Space Mono,monospace" font-size="7" fill="#b8960c" opacity="0.45">∞</text>
+
+        <!-- ══ CONNECTORS LEFT ↔ RIGHT ══ -->
+        <!-- ② 写作 → OUTPUT → 公开发表（写作在上，公开发表在上，平行） -->
+        <path d="M222,314 L330,314 L330,148 L428,148" fill="none" stroke="#1a1510" stroke-width="2" marker-end="url(#lp-dk)"/>
+        <rect x="291" y="302" width="62" height="18" rx="2" fill="#f5f0e8" stroke="#d4c9b5" stroke-width="1"/>
+        <text x="322" y="315" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#1a1510" letter-spacing="1">OUTPUT</text>
+
+        <!-- ① 策展 → INPUT → 现实+资源（策展在下，现实+资源在下，平行） -->
+        <path d="M222,396 L330,396 L330,404 L428,404" fill="none" stroke="#c85a1e" stroke-width="2" marker-end="url(#lp-ac)"/>
+        <rect x="291" y="384" width="56" height="18" rx="2" fill="#f5f0e8" stroke="#d4c9b5" stroke-width="1"/>
+        <text x="319" y="397" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#c85a1e" letter-spacing="1">INPUT</text>
+
+      </svg>
+    </div>
+
+    <div style="margin-top:2rem; padding:1.6rem 2rem; background:#1a1510;">
+      <div style="font-family:Space Mono,monospace; font-size:0.6rem; letter-spacing:0.25em; color:#c85a1e; margin-bottom:1rem; text-transform:uppercase;">Framework Notes · 框架说明</div>
+      <div style="font-size:0.82rem; line-height:2; font-weight:300; color:rgba(245,240,232,0.55);">
+        <strong style="color:#f5f0e8;">① 共享工具</strong>——最大困惑与最小可用框架同时服务于写作和策展，是两者共同的起点与底层框架。<br>
+        <strong style="color:#f5f0e8;">② 张力在愿景与现实之间</strong>——结构性张力是行动的驱动力，内阻力决定方向（远离还是靠近目标）。<br>
+        <strong style="color:#f5f0e8;">③ 身份认同驱动</strong>——「创作者」是内在身份，不是外部目标。身份认同比意志力更接近最小阻力之路。<br>
+        <strong style="color:#f5f0e8;">④ 资源重新定义</strong>——策展+写作是人人皆有的能力，消解「我没有条件」这个内阻力。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="tension-section">
+  <div class="tension-inner">
+    <div class="tension-header">
+      <div class="tension-eyebrow">The Path of Least Resistance</div>
+      <div class="tension-title">最小阻力之路</div>
+    </div>
+
+    <div class="tension-columns">
+
+      <div class="tension-col vision">
+        <div class="tension-col-label">Step 01</div>
+        <div class="tension-col-cn">愿景</div>
+        <div class="tension-col-en">Vision</div>
+        <div class="tension-col-desc">
+          看到自己的愿景。<br>
+          <strong>哪怕是模糊的。</strong><br><br>
+          你想成为什么样的人？<br>
+          你想写出什么样的东西？<br>
+          不需要清晰，只需要诚实。
+        </div>
+      </div>
+
+      <div class="tension-middle">
+        <div class="tension-middle-arrow">↑</div>
+        <div class="tension-middle-word">张力</div>
+        <div class="tension-middle-arrow">↓</div>
+      </div>
+
+      <div class="tension-col reality">
+        <div class="tension-col-label">Step 02</div>
+        <div class="tension-col-cn">现实</div>
+        <div class="tension-col-en">Current Reality</div>
+        <div class="tension-col-desc">
+          看到自己当前的现实。<br>
+          <strong>如实的、客观的、不加评判的。</strong><br><br>
+          你现在在哪里？<br>
+          你现在能做到什么？<br>
+          如实看见，才能真正出发。
+        </div>
+      </div>
+
+    </div>
+
+    <div class="tension-insight">
+      <div class="tension-insight-bar"></div>
+      <div class="tension-insight-text">
+        愿景和现实之间的<strong>张力差</strong>，就是我们走向最小阻力之路的动力。<br>
+        不是焦虑，不是自责——是一根拉向前方的绳子。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ROBERT FRITZ -->
+<section class="fritz-section">
+  <div class="fritz-inner">
+
+    <div class="fritz-header">
+      <div class="fritz-eyebrow">Robert Fritz · 三个核心洞见</div>
+      <div class="fritz-title">结构决定流动，<em>流动决定结果</em></div>
+    </div>
+
+    <div class="fritz-insights">
+      <div class="fritz-insight-card">
+        <div class="fritz-insight-num">INSIGHT 01</div>
+        <div class="fritz-insight-text">任何事物的<strong>底层结构</strong>，决定它的行为。</div>
+      </div>
+      <div class="fritz-insight-card">
+        <div class="fritz-insight-num">INSIGHT 02</div>
+        <div class="fritz-insight-text">能量沿<strong>最小阻力</strong>流动，而底层结构决定这种流动。</div>
+      </div>
+      <div class="fritz-insight-card">
+        <div class="fritz-insight-num">INSIGHT 03</div>
+        <div class="fritz-insight-text">我们<strong>可以改变</strong>自己身处的底层结构——一旦改变，一切都会跟着变。</div>
+      </div>
+    </div>
+
+    <!-- SVG diagram: two terrains, water flowing differently -->
+    <div class="fritz-diagram">
+      <svg id="fritz-svg" viewBox="0 0 860 300" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- ── LEFT PANEL: OLD STRUCTURE ── -->
+        <!-- background panel -->
+        <rect x="20" y="20" width="370" height="260" fill="rgba(255,255,255,0.03)" rx="2"/>
+
+        <!-- label -->
+        <text x="205" y="50" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" letter-spacing="2" fill="rgba(245,240,232,0.3)" text-transform="uppercase">OLD STRUCTURE · 旧结构</text>
+
+        <!-- terrain: rocky, obstacle-filled -->
+        <path d="M40,200 Q80,140 110,170 Q140,200 160,150 Q180,100 210,130 Q240,160 270,120 Q300,80 330,140 Q360,180 370,200" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+        <!-- ground fill -->
+        <path d="M40,200 Q80,140 110,170 Q140,200 160,150 Q180,100 210,130 Q240,160 270,120 Q300,80 330,140 Q360,180 370,200 L370,270 L40,270 Z" fill="rgba(255,255,255,0.04)"/>
+
+        <!-- obstacle rocks -->
+        <ellipse cx="130" cy="195" rx="18" ry="10" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <ellipse cx="230" cy="168" rx="22" ry="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <ellipse cx="310" cy="178" rx="16" ry="9" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+        <!-- water flow: tortured, chaotic path -->
+        <path d="M55,90 C70,90 75,110 85,120 C95,130 88,150 100,160 C112,170 120,160 135,175 C150,190 145,210 160,220 C175,230 185,215 200,230 C215,245 210,258 230,262" fill="none" stroke="#c85a1e" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+        <!-- flow arrowheads -->
+        <polygon points="228,256 236,264 222,266" fill="#c85a1e" opacity="0.7"/>
+
+        <!-- source dot -->
+        <circle cx="55" cy="90" r="5" fill="#c85a1e" opacity="0.9"/>
+        <text x="65" y="87" font-family="'Space Mono',monospace" font-size="8" fill="rgba(245,240,232,0.5)">能量</text>
+
+        <!-- result: scattered -->
+        <text x="235" y="260" font-family="'Space Mono',monospace" font-size="8" fill="rgba(200,90,30,0.6)">消耗 / 受阻</text>
+
+        <!-- panel title -->
+        <text x="205" y="290" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="11" fill="rgba(245,240,232,0.4)">结构不改变 → 能量反复受阻</text>
+
+        <!-- ── MIDDLE ARROW ── -->
+        <text x="430" y="148" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="13" fill="rgba(245,240,232,0.25)">改变</text>
+        <text x="430" y="165" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="13" fill="rgba(245,240,232,0.25)">结构</text>
+        <line x1="405" y1="155" x2="455" y2="155" stroke="rgba(245,240,232,0.15)" stroke-width="1.5"/>
+        <polygon points="453,151 461,155 453,159" fill="rgba(245,240,232,0.15)"/>
+
+        <!-- ── RIGHT PANEL: NEW STRUCTURE ── -->
+        <rect x="470" y="20" width="370" height="260" fill="rgba(200,90,30,0.04)" rx="2"/>
+
+        <!-- label -->
+        <text x="655" y="50" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" letter-spacing="2" fill="rgba(200,90,30,0.5)">NEW STRUCTURE · 新结构</text>
+
+        <!-- terrain: smooth valley -->
+        <path d="M490,120 Q530,180 570,200 Q610,215 655,220 Q700,215 740,200 Q780,180 820,120" fill="none" stroke="rgba(200,90,30,0.2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+        <!-- ground fill -->
+        <path d="M490,120 Q530,180 570,200 Q610,215 655,220 Q700,215 740,200 Q780,180 820,120 L820,270 L490,270 Z" fill="rgba(200,90,30,0.05)"/>
+
+        <!-- water flow: smooth, natural -->
+        <path d="M510,80 C530,90 545,120 560,145 C575,168 595,185 625,200 C645,210 665,212 685,205 C710,196 730,178 755,155 C775,136 800,105 820,80" fill="none" stroke="#c85a1e" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+
+        <!-- flow direction arrows along path -->
+        <polygon points="590,180 600,188 596,174" fill="#c85a1e" opacity="0.85"/>
+        <polygon points="695,205 706,200 698,192" fill="#c85a1e" opacity="0.85"/>
+
+        <!-- source dot -->
+        <circle cx="510" cy="80" r="5" fill="#c85a1e" opacity="0.9"/>
+        <text x="520" y="77" font-family="'Space Mono',monospace" font-size="8" fill="rgba(245,240,232,0.5)">能量</text>
+
+        <!-- result: flows freely -->
+        <circle cx="820" cy="80" r="8" fill="none" stroke="#b8960c" stroke-width="2" opacity="0.8"/>
+        <circle cx="820" cy="80" r="4" fill="#b8960c" opacity="0.8"/>
+        <text x="808" y="65" font-family="'Space Mono',monospace" font-size="8" fill="rgba(184,150,12,0.8)" text-anchor="middle">结果</text>
+
+        <!-- panel title -->
+        <text x="655" y="290" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="11" fill="rgba(200,90,30,0.6)">结构改变 → 能量自然流向目标</text>
+
+      </svg>
+    </div>
+
+    <div class="fritz-source">—— Robert Fritz，《最小阻力之路》</div>
+
+  </div>
+</section>
+
+
+<!-- CHOICE STRUCTURE DIAGRAM -->
+<section class="choice-section">
+  <div class="choice-inner">
+
+    <div class="choice-header">
+      <div class="choice-eyebrow">Structure of Choice · 选择的结构</div>
+      <div class="choice-title">改变结构，<em>而不是改变行为</em></div>
+    </div>
+
+    <div class="choice-pyramid">
+
+      <!-- Layer 1: 根本性选择 -->
+      <div class="choice-layer l1">
+        <div class="choice-left">
+          <div class="choice-tier">Primary Choice</div>
+          <div class="choice-name">根本性选择</div>
+          <div class="choice-desc">你最深处的渴望。<br>一旦做出，就会支配其他一切选择。</div>
+        </div>
+        <div class="choice-node"><div class="choice-node-dot"></div></div>
+        <div class="choice-right">
+          <div class="choice-example-label">例如</div>
+          <div class="choice-example-text">「我选择保持健康。」</div>
+        </div>
+      </div>
+
+      <!-- connector -->
+      <div class="choice-connector">
+        <div class="choice-connector-label left">支撑 ↓</div>
+        <div class="choice-connector-mid">↓</div>
+        <div class="choice-connector-label right"></div>
+      </div>
+
+      <!-- Layer 2: 首要选择 -->
+      <div class="choice-layer l2">
+        <div class="choice-left">
+          <div class="choice-tier">Secondary Choice</div>
+          <div class="choice-name">首要选择</div>
+          <div class="choice-desc">具体目标。由根本性选择衍生，<br>成为行动的指导原则。</div>
+        </div>
+        <div class="choice-node"><div class="choice-node-dot"></div></div>
+        <div class="choice-right">
+          <div class="choice-example-label">例如</div>
+          <div class="choice-example-text">「体重控制在 160 磅。」<br>「血液指标达标。」</div>
+        </div>
+      </div>
+
+      <!-- connector -->
+      <div class="choice-connector">
+        <div class="choice-connector-label left">支撑 ↓</div>
+        <div class="choice-connector-mid">↓</div>
+        <div class="choice-connector-label right"></div>
+      </div>
+
+      <!-- Layer 3: 次要选择 -->
+      <div class="choice-layer l3">
+        <div class="choice-left">
+          <div class="choice-tier">Tertiary Choice</div>
+          <div class="choice-name">次要选择</div>
+          <div class="choice-desc">策略性行动。本身未必是你想做的，<br>但它服务于更高层级的选择。</div>
+        </div>
+        <div class="choice-node"><div class="choice-node-dot"></div></div>
+        <div class="choice-right">
+          <div class="choice-example-label">例如</div>
+          <div class="choice-example-text">「改变饮食方式。」<br>「坚持每日运动。」</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="choice-insight">
+      <div class="choice-insight-bar"></div>
+      <div class="choice-insight-text">
+        你不再靠意志力强迫自己——<strong>因为每个行动都在服务你最深的渴望。</strong><br>
+        当底层结构支持改变，改变就会自然发生。这才是自律的真正关键。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="days-section" id="days-section">
+  <div class="section-header">
+    <h2>7天旅程</h2>
+    <span>THE ALCHEMIST · ONE LOOP</span>
+  </div>
+  <div class="days-grid" id="days-grid">
+    <!-- Injected by JS -->
+  </div>
+</section>
+
+<!-- FLOW -->
+<section class="flow-section">
+  <div class="flow-inner">
+    <div class="flow-title">CREATE FIRST · INFINITE LOOP</div>
+    <div class="flow-headline">公开发表是<em>起点</em>，<br>不是终点。</div>
+    <div class="flow-nodes" id="flow-nodes">
+      <!-- Injected by JS -->
+    </div>
+    <div class="flow-loop">
+      <span class="loop-icon">∞</span>
+      <span>每一次公开发表，都会带来新的内阻力、新的困惑、新的联系——循环永远不会结束，只会越来越深。</span>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- CREATIVITY STAGES -->
+<section class="creativity-section">
+  <div class="creativity-inner">
+    <div class="creativity-header">
+      <div class="creativity-eyebrow">Creative Process · 创造力的本质</div>
+      <div class="creativity-title">创造力的<em>四大阶段</em></div>
+    </div>
+
+    <div class="creativity-cards">
+
+      <div class="c-card">
+        <div class="c-card-bg">I</div>
+        <div class="c-card-bar"></div>
+        <div class="c-card-en">Commitment</div>
+        <div class="c-card-name">承诺</div>
+        <div class="c-card-desc">你决定去做这件事。<br><strong>公开发表</strong>就是你的承诺仪式。</div>
+      </div>
+
+      <div class="c-card">
+        <div class="c-card-bg">II</div>
+        <div class="c-card-bar"></div>
+        <div class="c-card-en">Incubation</div>
+        <div class="c-card-name">酝酿</div>
+        <div class="c-card-desc">大量输入，让问题在<br>潜意识里<strong>慢慢发酵</strong>。</div>
+      </div>
+
+      <div class="c-card">
+        <div class="c-card-bg">III</div>
+        <div class="c-card-bar"></div>
+        <div class="c-card-en">Illumination</div>
+        <div class="c-card-name">顿悟</div>
+        <div class="c-card-desc">那个<strong>「啊哈」时刻</strong>。<br>写作让它发生得更快。</div>
+      </div>
+
+      <div class="c-card">
+        <div class="c-card-bg">IV</div>
+        <div class="c-card-bar"></div>
+        <div class="c-card-en">Verification</div>
+        <div class="c-card-name">验证</div>
+        <div class="c-card-desc">把顿悟写出来，<br>检验它是否<strong>真实成立</strong>。</div>
+      </div>
+
+    </div>
+
+    <div class="creativity-caption">
+      <div class="creativity-caption-text">
+        大多数人卡在酝酿阶段——不断收藏、不断输入，却从不输出。<br>
+        <strong>写作是你主动触发顿悟的开关，也是验证思考是否真实的唯一方式。</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MINIMUM RESISTANCE PATH -->
+
+<!-- EMERSON QUOTE -->
+<section class="emerson-section">
+  <div class="emerson-inner">
+    <div class="emerson-source-top">Ralph Waldo Emerson · Self-Reliance</div>
+    <div class="emerson-deco">❝</div>
+    <blockquote class="emerson-text">
+      相信你自己的想法，相信在你内心深处对你而言是真实的东西，对所有人而言也是真实的——这就是天才。
+    </blockquote>
+    <div class="emerson-divider-line"></div>
+    <blockquote class="emerson-text emerson-text-2">
+      说出你内心深藏的信念，它终将成为普世的感受；<br>因为最内在的东西，到了适当的时候，终将成为最外在的东西。
+    </blockquote>
+    <div class="emerson-source-bottom">——爱默生《Self-Reliance》</div>
+  </div>
+</section>
+
+<!-- CURATION -->
+<section class="curation-section">
+  <div class="curation-inner">
+
+    <div class="curation-header">
+      <div class="curation-eyebrow">Curation · 策展</div>
+      <div class="curation-title">找<em>金山</em>，不在废料堆里翻</div>
+    </div>
+
+    <div class="curation-compare">
+
+      <!-- GOLD SIDE -->
+      <div class="curation-col gold-side">
+        <div class="curation-col-tag">Gold Mine · 英文原版</div>
+        <div class="curation-col-title">金山</div>
+        <div class="curation-col-sub">English Sources · Primary Material</div>
+
+        <div class="nugget-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Au 金块</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(184,150,12,0.3); border:1px solid rgba(184,150,12,0.3)"></div>少量银</div>
+        </div>
+
+        <div class="nugget-grid" id="nugget-gold"></div>
+
+        <div class="curation-col-desc">
+          <strong>随便挑一块，都是金子。</strong><br>
+          质量密度极高，信息差巨大——<br>
+          看原版的人更少，竞争更低。
+        </div>
+      </div>
+
+      <!-- SILVER SIDE -->
+      <div class="curation-col silver-side">
+        <div class="curation-col-tag">Waste Pile · 中文二手</div>
+        <div class="curation-col-title">废料堆</div>
+        <div class="curation-col-sub">Secondhand · Filtered · Diluted</div>
+
+        <div class="nugget-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#c8c8c0"></div>Ag 银块</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Au 偶有金块</div>
+        </div>
+
+        <div class="nugget-grid" id="nugget-silver"></div>
+
+        <div class="curation-col-desc">
+          <strong>90% 都是银。</strong><br>
+          在这里找金子，需要耗费大量精力翻找，<br>且已被无数人提前筛过一遍。
+        </div>
+      </div>
+
+    </div>
+
+    <div class="curation-insight">
+      <div class="curation-insight-icon">⛏</div>
+      <div class="curation-insight-text">
+        先拆解看看，你会知道自己还缺少哪些「金块元素」，然后再出门去找。
+        <strong>策展的核心：知道自己要找什么，然后去密度最高的地方挖。</strong>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MIN FRAMEWORK CHAIN -->
+<section style="padding:5rem 2rem; background:#1a1510; border-bottom:2px solid #1a1510;">
+  <div style="max-width:860px; margin:0 auto;">
+
+    <div style="margin-bottom:3rem;">
+      <div style="font-family:Space Mono,monospace; font-size:0.65rem; letter-spacing:0.3em; color:#8a7e6e; text-transform:uppercase; margin-bottom:0.8rem;">Logic Chain · 思维链</div>
+      <div style="font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:900; line-height:1.2; color:#f5f0e8; font-family:Noto Serif SC,serif;">最小可用框架的<span style="color:#c85a1e;">完整逻辑</span></div>
+    </div>
+
+    <div style="position:relative;">
+
+      <!-- vertical spine -->
+      <div style="position:absolute; left:28px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, #c85a1e, #b8960c); opacity:0.3;"></div>
+
+      <!-- NODE 1: 幂律分布 -->
+      <div style="display:flex; gap:2rem; align-items:flex-start; margin-bottom:0; position:relative;">
+        <!-- dot -->
+        <div style="flex-shrink:0; width:58px; display:flex; flex-direction:column; align-items:center; gap:0;">
+          <div style="width:16px; height:16px; border-radius:50%; background:#c85a1e; border:3px solid #1a1510; z-index:1; margin-top:1.2rem;"></div>
+        </div>
+        <!-- card -->
+        <div style="flex:1; border:1px solid rgba(255,255,255,0.08); padding:1.4rem 1.6rem; margin-bottom:0;">
+          <div style="display:flex; align-items:baseline; gap:1rem; margin-bottom:0.6rem;">
+            <span style="font-family:Space Mono,monospace; font-size:0.58rem; letter-spacing:0.2em; color:#c85a1e; flex-shrink:0;">STEP 01</span>
+            <span style="font-size:1.1rem; font-weight:900; color:#f5f0e8; font-family:Noto Serif SC,serif;">幂律分布</span>
+            <span style="font-family:Space Mono,monospace; font-size:0.6rem; color:#8a7e6e; letter-spacing:0.1em;">POWER LAW</span>
+          </div>
+          <div style="font-size:0.88rem; color:rgba(245,240,232,0.6); line-height:1.85; font-weight:300;">
+            少数核心概念撑起整个领域。<br>
+            <strong style="color:#f5f0e8; font-weight:700;">不需要学完再开始。</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- connector arrow -->
+      <div style="display:flex; gap:2rem; align-items:center; padding:0.2rem 0;">
+        <div style="width:58px; display:flex; justify-content:center;">
+          <div style="font-size:1rem; color:#c85a1e; opacity:0.5;">↓</div>
+        </div>
+        <div style="flex:1; font-family:Space Mono,monospace; font-size:0.65rem; color:#8a7e6e; letter-spacing:0.1em; padding-left:0;">所以可以</div>
+      </div>
+
+      <!-- NODE 2: 贝叶斯 -->
+      <div style="display:flex; gap:2rem; align-items:flex-start; margin-bottom:0; position:relative;">
+        <div style="flex-shrink:0; width:58px; display:flex; justify-content:center;">
+          <div style="width:16px; height:16px; border-radius:50%; background:#c85a1e; border:3px solid #1a1510; z-index:1; margin-top:1.2rem;"></div>
+        </div>
+        <div style="flex:1; border:1px solid rgba(255,255,255,0.08); padding:1.4rem 1.6rem;">
+          <div style="display:flex; align-items:baseline; gap:1rem; margin-bottom:0.6rem;">
+            <span style="font-family:Space Mono,monospace; font-size:0.58rem; letter-spacing:0.2em; color:#c85a1e; flex-shrink:0;">STEP 02</span>
+            <span style="font-size:1.1rem; font-weight:900; color:#f5f0e8; font-family:Noto Serif SC,serif;">贝叶斯定理</span>
+            <span style="font-family:Space Mono,monospace; font-size:0.6rem; color:#8a7e6e; letter-spacing:0.1em;">BAYESIAN UPDATING</span>
+          </div>
+          <div style="font-size:0.88rem; color:rgba(245,240,232,0.6); line-height:1.85; font-weight:300;">
+            从粗糙的认知开始，错了可以修正。<br>
+            <strong style="color:#f5f0e8; font-weight:700;">关键是先有一个起点——先验（Prior）。</strong>
+          </div>
+          <!-- bayesian visual -->
+          <div style="margin-top:1rem; display:flex; align-items:center; gap:0.8rem; font-family:Space Mono,monospace; font-size:0.72rem;">
+            <span style="padding:0.3rem 0.7rem; border:1px solid rgba(200,90,30,0.4); color:#c85a1e;">先验 Prior</span>
+            <span style="color:#8a7e6e;">+</span>
+            <span style="padding:0.3rem 0.7rem; border:1px solid rgba(255,255,255,0.15); color:rgba(245,240,232,0.5);">新证据</span>
+            <span style="color:#8a7e6e;">→</span>
+            <span style="padding:0.3rem 0.7rem; border:1px solid rgba(184,150,12,0.5); color:#b8960c;">后验 Posterior</span>
+            <span style="color:#8a7e6e; font-size:0.6rem;">（更新认知）</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- connector arrow -->
+      <div style="display:flex; gap:2rem; align-items:center; padding:0.2rem 0;">
+        <div style="width:58px; display:flex; justify-content:center;">
+          <div style="font-size:1rem; color:#c85a1e; opacity:0.5;">↓</div>
+        </div>
+        <div style="flex:1; font-family:Space Mono,monospace; font-size:0.65rem; color:#8a7e6e; letter-spacing:0.1em;">如何建立先验？</div>
+      </div>
+
+      <!-- NODE 3: 快速写 + WWHW -->
+      <div style="display:flex; gap:2rem; align-items:flex-start; margin-bottom:0; position:relative;">
+        <div style="flex-shrink:0; width:58px; display:flex; justify-content:center;">
+          <div style="width:16px; height:16px; border-radius:50%; background:#c85a1e; border:3px solid #1a1510; z-index:1; margin-top:1.2rem;"></div>
+        </div>
+        <div style="flex:1; border:1px solid rgba(200,90,30,0.35); padding:1.4rem 1.6rem; background:rgba(200,90,30,0.04);">
+          <div style="display:flex; align-items:baseline; gap:1rem; margin-bottom:0.6rem;">
+            <span style="font-family:Space Mono,monospace; font-size:0.58rem; letter-spacing:0.2em; color:#c85a1e; flex-shrink:0;">STEP 03</span>
+            <span style="font-size:1.1rem; font-weight:900; color:#f5f0e8; font-family:Noto Serif SC,serif;">快速写 · WWHW 框架</span>
+          </div>
+          <div style="font-size:0.88rem; color:rgba(245,240,232,0.6); line-height:1.85; font-weight:300; margin-bottom:1rem;">
+            <strong style="color:#c85a1e; font-weight:700;">建立先验的工具。</strong><br>
+            给你一个结构，让你把脑子里模糊的东西先落地——<br>哪怕是错的，也比没有好。
+          </div>
+          <!-- WWHW mini grid -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:0.72rem;">
+            <div style="padding:0.5rem 0.8rem; background:rgba(255,255,255,0.04); border-left:2px solid #c85a1e;">
+              <div style="font-family:Space Mono,monospace; font-size:0.6rem; color:#c85a1e; letter-spacing:0.15em; margin-bottom:0.2rem;">WHY</div>
+              <div style="color:rgba(245,240,232,0.5); font-family:Noto Serif SC,serif;">为什么要学这个？</div>
+            </div>
+            <div style="padding:0.5rem 0.8rem; background:rgba(255,255,255,0.04); border-left:2px solid rgba(200,90,30,0.5);">
+              <div style="font-family:Space Mono,monospace; font-size:0.6rem; color:#c85a1e; letter-spacing:0.15em; margin-bottom:0.2rem;">WHAT</div>
+              <div style="color:rgba(245,240,232,0.5); font-family:Noto Serif SC,serif;">核心概念是什么？</div>
+            </div>
+            <div style="padding:0.5rem 0.8rem; background:rgba(255,255,255,0.04); border-left:2px solid rgba(200,90,30,0.5);">
+              <div style="font-family:Space Mono,monospace; font-size:0.6rem; color:#c85a1e; letter-spacing:0.15em; margin-bottom:0.2rem;">HOW</div>
+              <div style="color:rgba(245,240,232,0.5); font-family:Noto Serif SC,serif;">如何应用？</div>
+            </div>
+            <div style="padding:0.5rem 0.8rem; background:rgba(255,255,255,0.04); border-left:2px solid rgba(200,90,30,0.3);">
+              <div style="font-family:Space Mono,monospace; font-size:0.6rem; color:#c85a1e; letter-spacing:0.15em; margin-bottom:0.2rem;">WHAT IF</div>
+              <div style="color:rgba(245,240,232,0.5); font-family:Noto Serif SC,serif;">如果错了怎么办？</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- connector arrow -->
+      <div style="display:flex; gap:2rem; align-items:center; padding:0.2rem 0;">
+        <div style="width:58px; display:flex; justify-content:center;">
+          <div style="font-size:1rem; color:#b8960c; opacity:0.6;">↓</div>
+        </div>
+        <div style="flex:1; font-family:Space Mono,monospace; font-size:0.65rem; color:#8a7e6e; letter-spacing:0.1em;">如何修正先验？</div>
+      </div>
+
+      <!-- NODE 4: AI -->
+      <div style="display:flex; gap:2rem; align-items:flex-start; position:relative;">
+        <div style="flex-shrink:0; width:58px; display:flex; justify-content:center;">
+          <div style="width:16px; height:16px; border-radius:50%; background:#b8960c; border:3px solid #1a1510; z-index:1; margin-top:1.2rem;"></div>
+        </div>
+        <div style="flex:1; border:1px solid rgba(184,150,12,0.3); padding:1.4rem 1.6rem; background:rgba(184,150,12,0.04);">
+          <div style="display:flex; align-items:baseline; gap:1rem; margin-bottom:0.6rem;">
+            <span style="font-family:Space Mono,monospace; font-size:0.58rem; letter-spacing:0.2em; color:#b8960c; flex-shrink:0;">STEP 04</span>
+            <span style="font-size:1.1rem; font-weight:900; color:#f5f0e8; font-family:Noto Serif SC,serif;">AI</span>
+            <span style="font-family:Space Mono,monospace; font-size:0.6rem; color:#8a7e6e; letter-spacing:0.1em;">POSTERIOR UPDATER</span>
+          </div>
+          <div style="font-size:0.88rem; color:rgba(245,240,232,0.6); line-height:1.85; font-weight:300;">
+            <strong style="color:#b8960c; font-weight:700;">修正先验的工具。</strong><br>
+            帮你找到核心概念，戳穿你认知里的漏洞——<br>用新证据更新你的后验，推动下一轮写作。
+          </div>
+          <!-- AI → back to writing loop indicator -->
+          <div style="margin-top:1rem; font-family:Space Mono,monospace; font-size:0.65rem; color:#8a7e6e; letter-spacing:0.1em;">
+            → 回到 STEP 03 · 再写一遍 · <span style="color:#b8960c;">∞ 迭代</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- bottom summary -->
+    <div style="margin-top:2.5rem; padding:1.4rem 1.8rem; background:rgba(255,255,255,0.04); border-left:3px solid #c85a1e; font-size:0.88rem; color:rgba(245,240,232,0.55); line-height:1.9; font-weight:300;">
+      最小可用框架不是完美的框架，是<strong style="color:#f5f0e8; font-weight:700;">足够用来开始的框架</strong>。<br>
+      幂律告诉你不必学完，贝叶斯告诉你错了可以改，写作帮你落地，AI帮你修正。<br>
+      <strong style="color:#c85a1e; font-weight:700;">先有先验，再用证据更新——这才是最小阻力的学习路径。</strong>
+    </div>
+
+  </div>
+</section>
+
+<!-- JUNG QUOTE -->
+<section class="jung-section">
+  <div class="jung-inner">
+    <div class="jung-lang-toggle">
+      <button class="jung-btn active" onclick="showLang('en')">EN</button>
+      <span class="jung-divider">·</span>
+      <button class="jung-btn" onclick="showLang('zh')">中</button>
+    </div>
+    <div class="jung-deco">❝</div>
+    <blockquote class="jung-text en active">
+      The meeting with oneself is, at first, the meeting with one's own shadow. The shadow is a tight passage, a narrow door, whose painful constriction no one is spared who goes down to the deep well. But one must learn to know oneself in order to know who one is.
+    </blockquote>
+    <blockquote class="jung-text zh">
+      与自己的相遇，最初是与自己的阴影相遇。阴影是一条狭窄的通道，一道狭窄的门，无人能免于其痛苦的挤压，唯有向下探入深井的人。但必须学会认识自己，才能明白自己是谁。
+    </blockquote>
+    <div class="jung-source">—— C.G. Jung</div>
+  </div>
+</section>
+
+<!-- WWHW -->
+<section class="wwhw-section">
+  <div class="wwhw-inner">
+    <div class="wwhw-header">
+      <div class="wwhw-eyebrow">🪄 顺畅写作的魔法棒</div>
+      <div class="wwhw-title">WWHW 大纲<span>.</span></div>
+      <div class="wwhw-subtitle">用四个问题，把任何主题写透。先问问题，再写答案。</div>
+    </div>
+
+    <div class="wwhw-grid">
+
+      <!-- W1: Why -->
+      <div class="wwhw-card">
+        <div class="wwhw-card-num">01</div>
+        <div class="wwhw-card-tag">Why · 为什么</div>
+        <div class="wwhw-card-letter">W</div>
+        <div class="wwhw-card-label">为什么要对抗内阻力？</div>
+        <div class="wwhw-card-body">
+          人生顺顺利利的不好吗？<br>
+          没有「为什么」，写出来的字是空的。
+        </div>
+      </div>
+
+      <!-- W2: What -->
+      <div class="wwhw-card">
+        <div class="wwhw-card-num">02</div>
+        <div class="wwhw-card-tag">What · 是什么</div>
+        <div class="wwhw-card-letter">W</div>
+        <div class="wwhw-card-label">内阻力的面具</div>
+        <div class="wwhw-card-body">
+          靠近目标 → 真实的困难。<br>
+          远离目标 → 内阻力在说话。
+        </div>
+      </div>
+
+      <!-- H: How -->
+      <div class="wwhw-card">
+        <div class="wwhw-card-num">03</div>
+        <div class="wwhw-card-tag">How · 如何做</div>
+        <div class="wwhw-card-letter">H</div>
+        <div class="wwhw-card-label">如何克服内阻力？</div>
+        <div class="wwhw-card-body">
+          <strong>改变结构，而不是改变行为。</strong>
+        </div>
+      </div>
+
+      <!-- W3: What If -->
+      <div class="wwhw-card">
+        <div class="wwhw-card-num">04</div>
+        <div class="wwhw-card-tag">What If · 如果做成了</div>
+        <div class="wwhw-card-letter">W</div>
+        <div class="wwhw-card-label">你会得到什么？</div>
+        <div class="wwhw-card-body">
+          会得到什么梦想结果？<br>
+          会成为什么样的人？
+        </div>
+      </div>
+
+    </div>
+
+    <div class="wwhw-footer">
+      <div class="wwhw-footer-icon">🪄</div>
+      <div class="wwhw-footer-text">
+        <strong>今日写作练习：</strong>选一个你最近在思考的主题，用 WWHW 四个问题各写一段。
+        不追求完美，只追求把问题写清楚。写清楚问题，答案自然浮现。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESISTANCE DIAGRAM -->
+<section class="resistance-section">
+  <div class="resistance-inner">
+    <div class="resistance-header">
+      <div class="res-eyebrow">DAY 1 · INNER RESISTANCE</div>
+      <h3>阻力的伪装</h3>
+    </div>
+
+    <div class="res-diagram" id="res-diagram">
+      <!-- center -->
+      <div class="res-center">恐惧</div>
+
+      <!-- satellites positioned via JS -->
+      <div class="res-satellites" id="res-satellites"></div>
+
+      <!-- SVG arrows -->
+      <svg class="res-svg" id="res-svg" viewBox="0 0 780 320" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="res-caption">
+      阻力没有自己的力量。它的每一份力量，<br>都<em>源于我们的恐惧</em>。
+    </div>
+  </div>
+</section>
+
+<!-- ALCHEMIST QUOTE -->
+<section class="quote-section">
+  <div class="quote-inner">
+    <div class="quote-deco">❝</div>
+    <blockquote class="quote-text">
+      当你真心渴望某样东西时，<br>整个宇宙都会联合起来帮助你实现。
+    </blockquote>
+    <div class="quote-source">——保罗·柯艾略《牧羊少年奇幻之旅》</div>
+    <div class="quote-bridge">
+      你渴望的，不只是写作。<br>
+      是通过写作，找到那个真正的自己。
+    </div>
+
+    <div class="quote-divider"></div>
+
+    <div class="quote-block-2">
+      <div class="quote-deco">❝</div>
+      <blockquote class="quote-text">
+        我花了4年像拉斐尔一样画画，<br>却花了一生像孩子一样画画。
+      </blockquote>
+      <div class="quote-source" style="margin-bottom:0.8rem;">——巴勃罗·毕加索</div>
+      <div class="quote-source" style="color:rgba(245,240,232,0.25); font-size:0.58rem; letter-spacing:0.15em;">
+        It took me four years to paint like Raphael,<br>but a lifetime to paint like a child.
+      </div>
+      <div class="quote-bridge">
+        写作不是学来的技能，是你本来就有的冲动。<br>
+        我们做的，只是把它找回来。
+      </div>
+    </div>
+
+    <div class="quote-divider"></div>
+
+    <div class="quote-block-2">
+      <div class="quote-deco">❝</div>
+      <blockquote class="quote-text">
+        我们的目的不是制造艺术，<br>
+        而是要进入那美好的境界，<br>
+        让艺术无可避免地发生。
+      </blockquote>
+      <div class="quote-source">——罗伯特·亨利</div>
+      <div class="quote-bridge">
+        不要等待灵感降临。<br>
+        先坐下来写——写作本身，就是那个境界。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MINIMAL BUSINESS ROADMAP -->
+<section style="padding:5rem 2rem; background:var(--bg); border-bottom:2px solid var(--ink);">
+  <div style="max-width:900px; margin:0 auto;">
+
+    <!-- Header -->
+    <div style="margin-bottom:3.5rem;">
+      <div style="font-family:Space Mono,monospace; font-size:0.65rem; letter-spacing:0.3em; color:var(--muted); text-transform:uppercase; margin-bottom:0.8rem;">Minimal Business · 极简商业</div>
+      <div style="font-size:clamp(1.8rem,4vw,2.6rem); font-weight:900; line-height:1.15; letter-spacing:-0.02em; font-family:Noto Serif SC,serif;">做热爱的事，<span style="color:var(--accent);">顺便赚钱</span></div>
+      <div style="margin-top:0.8rem; font-size:0.85rem; color:var(--muted); font-weight:300; line-height:1.8;">内容是杠杆，极简是护城河。</div>
+    </div>
+
+    <!-- VS comparison -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; border:2px solid var(--ink); margin-bottom:3rem;">
+      <div style="padding:1.4rem 1.6rem; background:var(--card-bg); border-right:2px solid var(--ink);">
+        <div style="font-family:Space Mono,monospace; font-size:0.58rem; letter-spacing:0.2em; color:var(--muted); margin-bottom:1rem;">市面上 99% 的做法</div>
+        <div style="display:flex; flex-direction:column; gap:0.6rem;">
+          <div style="font-size:0.82rem; color:var(--muted); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:#c0b8a8; flex-shrink:0;">✗</span>追爆文 → 引来白嫖流量</div>
+          <div style="font-size:0.82rem; color:var(--muted); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:#c0b8a8; flex-shrink:0;">✗</span>强行转化非买家</div>
+          <div style="font-size:0.82rem; color:var(--muted); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:#c0b8a8; flex-shrink:0;">✗</span>制造恐慌、虚假宣传</div>
+          <div style="font-size:0.82rem; color:var(--muted); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:#c0b8a8; flex-shrink:0;">✗</span>跳过地基，追求快速放大</div>
+          <div style="font-size:0.82rem; color:var(--muted); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:#c0b8a8; flex-shrink:0;">✗</span>包装完美人设，从不犯错</div>
+        </div>
+      </div>
+      <div style="padding:1.4rem 1.6rem; background:var(--ink);">
+        <div style="font-family:Space Mono,monospace; font-size:0.58rem; letter-spacing:0.2em; color:rgba(245,240,232,0.4); margin-bottom:1rem;">极简商业的做法</div>
+        <div style="display:flex; flex-direction:column; gap:0.6rem;">
+          <div style="font-size:0.82rem; color:rgba(245,240,232,0.7); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:var(--accent); flex-shrink:0;">✓</span>只吸引真正买家，筛选同频人</div>
+          <div style="font-size:0.82rem; color:rgba(245,240,232,0.7); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:var(--accent); flex-shrink:0;">✓</span>只卖真实经验，无需夸大</div>
+          <div style="font-size:0.82rem; color:rgba(245,240,232,0.7); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:var(--accent); flex-shrink:0;">✓</span>死磕前期，玩长线游戏</div>
+          <div style="font-size:0.82rem; color:rgba(245,240,232,0.7); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:var(--accent); flex-shrink:0;">✓</span>身心合一，不做自己不认可的业务</div>
+          <div style="font-size:0.82rem; color:rgba(245,240,232,0.7); font-weight:300; display:flex; gap:0.6rem; line-height:1.6;"><span style="color:var(--accent); flex-shrink:0;">✓</span>把犯过的错公开发表，形成产品</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roadmap: 5 principles as vertical chain -->
+    <div style="position:relative;">
+      <div style="position:absolute; left:19px; top:20px; bottom:20px; width:2px; background:linear-gradient(to bottom, var(--ink), var(--gold)); opacity:0.2;"></div>
+
+      <!-- P1 -->
+      <div style="display:flex; gap:1.8rem; margin-bottom:1.5rem; align-items:flex-start;">
+        <div style="flex-shrink:0; width:40px; height:40px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; font-family:Space Mono,monospace; font-size:0.7rem; color:var(--bg); font-weight:700; z-index:1;">01</div>
+        <div style="flex:1; padding:1.2rem 1.4rem; border:1px solid var(--border);">
+          <div style="font-size:1rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.4rem;">耐心积累，不追快速放大</div>
+          <div style="font-size:0.8rem; color:var(--muted); line-height:1.8; font-weight:300;">复利的前提是玩长线游戏。地基不稳，起飞越快，塌得越快。<strong style="color:var(--ink); font-weight:700;">你身上唯一带不走的是扎实的能力。</strong></div>
+          <div style="margin-top:0.8rem; font-family:Space Mono,monospace; font-size:0.62rem; color:var(--border); letter-spacing:0.1em;">LONG GAME · COMPOUND · NO SHORTCUTS</div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div style="display:flex; gap:1.8rem; margin-bottom:1.5rem; align-items:flex-start;">
+        <div style="flex-shrink:0; width:40px; height:40px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; font-family:Space Mono,monospace; font-size:0.7rem; color:var(--bg); font-weight:700; z-index:1;">02</div>
+        <div style="flex:1; padding:1.2rem 1.4rem; border:1px solid var(--border);">
+          <div style="font-size:1rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.4rem;">只吸引买家，果断放弃非买家</div>
+          <div style="font-size:0.8rem; color:var(--muted); line-height:1.8; font-weight:300;">不讨好看客，不转化白嫖者。<strong style="color:var(--ink); font-weight:700;">筛选，而不是改变。</strong>丢掉劣质客户，把大部分时间投给优质客户，商业翻几倍。</div>
+          <div style="margin-top:0.8rem; font-family:Space Mono,monospace; font-size:0.62rem; color:var(--border); letter-spacing:0.1em;">PURE BUYER · FILTER NOT CHANGE · 10X</div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div style="display:flex; gap:1.8rem; margin-bottom:1.5rem; align-items:flex-start;">
+        <div style="flex-shrink:0; width:40px; height:40px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; font-family:Space Mono,monospace; font-size:0.7rem; color:white; font-weight:700; z-index:1;">03</div>
+        <div style="flex:1; padding:1.2rem 1.4rem; border:1px solid var(--accent); background:rgba(200,90,30,0.03);">
+          <div style="font-size:1rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.4rem; color:var(--accent);">只卖真实经验，不追短期热点</div>
+          <div style="font-size:0.8rem; color:var(--muted); line-height:1.8; font-weight:300;">基于真实经验的产品，宣传时<strong style="color:var(--ink); font-weight:700;">无比有底气</strong>，不会吸引错误的人。过程型产品 + 结果型产品，都源于你真实走过的路。</div>
+          <div style="margin-top:0.8rem; font-family:Space Mono,monospace; font-size:0.62rem; color:rgba(200,90,30,0.4); letter-spacing:0.1em;">REAL EXPERIENCE · PROCESS PRODUCT · SHOW YOUR WORK</div>
+        </div>
+      </div>
+
+      <!-- P4 -->
+      <div style="display:flex; gap:1.8rem; margin-bottom:1.5rem; align-items:flex-start;">
+        <div style="flex-shrink:0; width:40px; height:40px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; font-family:Space Mono,monospace; font-size:0.7rem; color:var(--bg); font-weight:700; z-index:1;">04</div>
+        <div style="flex:1; padding:1.2rem 1.4rem; border:1px solid var(--border);">
+          <div style="font-size:1rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.4rem;">花钱加入你认可的商业，亲身学习</div>
+          <div style="font-size:0.8rem; color:var(--muted); line-height:1.8; font-weight:300;">最快学习一种商业模式的方式，是<strong style="color:var(--ink); font-weight:700;">成为它的买家</strong>——看对方怎么做，他的生活状态是否是你想要的理想状态。白嫖，是最贵的学费。</div>
+          <div style="margin-top:0.8rem; font-family:Space Mono,monospace; font-size:0.62rem; color:var(--border); letter-spacing:0.1em;">BE THE BUYER · LEARN BY JOINING · PAY FOR CLARITY</div>
+        </div>
+      </div>
+
+      <!-- P5 -->
+      <div style="display:flex; gap:1.8rem; align-items:flex-start;">
+        <div style="flex-shrink:0; width:40px; height:40px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; font-family:Space Mono,monospace; font-size:0.7rem; color:white; font-weight:700; z-index:1;">05</div>
+        <div style="flex:1; padding:1.2rem 1.4rem; border:1px solid var(--gold); background:rgba(184,150,12,0.03);">
+          <div style="font-size:1rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.4rem; color:var(--gold);">把实践过程公开发表，形成产品</div>
+          <div style="font-size:0.8rem; color:var(--muted); line-height:1.8; font-weight:300;">犯过的错、走过的弯路，都是你的创作素材。<strong style="color:var(--ink); font-weight:700;">把解决问题的过程记录下来，这就是过程型产品的起点。</strong>在没有实践之前，没有真理可言。</div>
+          <div style="margin-top:0.8rem; font-family:Space Mono,monospace; font-size:0.62rem; color:rgba(184,150,12,0.5); letter-spacing:0.1em;">PROCESS PRODUCT · PUBLISH · BUILD IN PUBLIC</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: core formula -->
+    <div style="margin-top:3rem; display:grid; grid-template-columns:repeat(3,1fr); border:2px solid var(--ink); text-align:center;">
+      <div style="padding:1.4rem 1rem; border-right:1px solid var(--border);">
+        <div style="font-size:1.6rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.3rem;">筛选</div>
+        <div style="font-family:Space Mono,monospace; font-size:0.6rem; color:var(--muted); letter-spacing:0.15em;">而不是改变</div>
+      </div>
+      <div style="padding:1.4rem 1rem; border-right:1px solid var(--border); background:var(--ink);">
+        <div style="font-size:1.6rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.3rem; color:var(--accent);">过程型产品</div>
+        <div style="font-family:Space Mono,monospace; font-size:0.6rem; color:rgba(245,240,232,0.4); letter-spacing:0.15em;">Show Your Work</div>
+      </div>
+      <div style="padding:1.4rem 1rem;">
+        <div style="font-size:1.6rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.3rem;">长线游戏</div>
+        <div style="font-family:Space Mono,monospace; font-size:0.6rem; color:var(--muted); letter-spacing:0.15em;">Infinite Game</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMMUNITY SECTION -->
+<section style="padding:5rem 2rem; background:var(--ink); border-bottom:2px solid var(--ink);">
+  <div style="max-width:900px; margin:0 auto;">
+
+    <!-- Header -->
+    <div style="margin-bottom:0.6rem;">
+      <div style="font-family:Space Mono,monospace; font-size:0.62rem; letter-spacing:0.3em; color:rgba(245,240,232,0.3); text-transform:uppercase; margin-bottom:1rem;">Community · 社群</div>
+      <div style="font-size:clamp(2rem,5vw,3.2rem); font-weight:900; font-family:Noto Serif SC,serif; color:var(--bg); line-height:1.1; margin-bottom:0.5rem;">Free Writers</div>
+      <div style="font-size:clamp(1rem,2.5vw,1.4rem); font-weight:700; font-family:Noto Serif SC,serif; color:rgba(245,240,232,0.55); margin-bottom:2rem; letter-spacing:0.05em;">自由创作者社群</div>
+      <div style="font-size:1rem; color:rgba(245,240,232,0.6); font-weight:300; font-family:Noto Serif SC,serif; line-height:1.8; margin-bottom:2.5rem;">成为热爱、探索、无限的自由创作者</div>
+    </div>
+
+    <!-- Price + badge -->
+    <div style="display:flex; align-items:baseline; gap:1.2rem; margin-bottom:2rem; flex-wrap:wrap;">
+      <div style="font-size:3rem; font-weight:900; font-family:Space Mono,monospace; color:var(--bg); line-height:1;">¥999</div>
+      <div style="display:flex; flex-direction:column; gap:0.3rem;">
+        <span style="font-family:Space Mono,monospace; font-size:0.65rem; letter-spacing:0.2em; color:var(--accent); border:1px solid var(--accent); padding:0.2rem 0.6rem;">终身制 · 仅限前100人</span>
+      </div>
+    </div>
+
+    <!-- Inclusions -->
+    <div style="border:1px solid rgba(255,255,255,0.1); padding:1.5rem 1.8rem; margin-bottom:2rem; background:rgba(255,255,255,0.03);">
+      <div style="font-family:Space Mono,monospace; font-size:0.6rem; letter-spacing:0.2em; color:rgba(245,240,232,0.3); margin-bottom:1rem;">包含内容 · INCLUDES</div>
+      <div style="font-size:0.85rem; color:rgba(245,240,232,0.5); line-height:1.6; font-weight:300; margin-bottom:0.8rem; font-family:Noto Serif SC,serif;">所有课程和实践小组 · 每年4期以上 · 所有课程无限复训</div>
+      <div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:1rem;">
+        <div style="display:flex; gap:0.8rem; align-items:center; font-size:0.88rem; color:rgba(245,240,232,0.7); font-family:Noto Serif SC,serif;"><span style="color:var(--accent); font-family:Space Mono,monospace; font-size:0.7rem; flex-shrink:0;">01</span>写作学习任何领域</div>
+        <div style="display:flex; gap:0.8rem; align-items:center; font-size:0.88rem; color:rgba(245,240,232,0.7); font-family:Noto Serif SC,serif;"><span style="color:var(--accent); font-family:Space Mono,monospace; font-size:0.7rem; flex-shrink:0;">02</span>极简个人商业</div>
+        <div style="display:flex; gap:0.8rem; align-items:center; font-size:0.88rem; color:rgba(245,240,232,0.7); font-family:Noto Serif SC,serif;"><span style="color:var(--accent); font-family:Space Mono,monospace; font-size:0.7rem; flex-shrink:0;">03</span>未来所有课程</div>
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div style="margin-bottom:2rem;">
+      <div style="display:grid; grid-template-columns:1fr auto 1fr; align-items:baseline; margin-bottom:0.6rem; gap:0.5rem;">
+        <span style="font-family:Noto Serif SC,serif; font-size:0.85rem; color:rgba(245,240,232,0.6);">已加入 <strong style="color:var(--bg); font-size:1.1rem;">35</strong> 位伙伴</span>
+        <span style="font-family:Space Mono,monospace; font-size:0.65rem; color:var(--accent); letter-spacing:0.1em; white-space:nowrap; text-align:center;">仅剩65个终身制名额</span>
+        <span style="font-family:Noto Serif SC,serif; font-size:0.85rem; color:rgba(245,240,232,0.6); text-align:right;">共 <strong style="color:var(--bg); font-size:1.1rem;">100</strong> 位名额</span>
+      </div>
+      <div style="height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden;">
+        <div style="height:100%; width:35%; background:var(--accent); border-radius:3px; transition:width 1s ease;"></div>
+      </div>
+    </div>
+
+    <!-- CTA button -->
+    <div id="community-btn" onclick="document.getElementById('community-wechat').style.display='block'; this.style.display='none';" style="display:inline-block; padding:1rem 3rem; background:var(--accent); color:var(--bg); font-family:Noto Serif SC,serif; font-size:1rem; letter-spacing:0.15em; cursor:pointer; transition:all 0.2s; font-weight:700; user-select:none;">
+      加 入 社 群 →
+    </div>
+    <div id="community-wechat" style="display:none; padding:1rem 2rem; background:rgba(255,255,255,0.06); border:1px solid var(--accent); font-family:Space Mono,monospace; font-size:0.85rem; color:var(--bg); letter-spacing:0.15em; display:none;">
+      微信：yunbujian3
+    </div>
+    <style>
+      #community-btn:hover { background:var(--bg); color:var(--ink); transform:translateY(-2px); box-shadow:4px 4px 0 var(--accent); }
+    </style>
+
+  </div>
+</section>
+
+<!-- SINGLE COURSES -->
+<section style="padding:4rem 2rem; background:var(--card-bg); border-bottom:2px solid var(--ink);">
+  <div style="max-width:900px; margin:0 auto;">
+    <div style="font-family:Space Mono,monospace; font-size:0.62rem; letter-spacing:0.3em; color:var(--muted); margin-bottom:0.6rem; text-transform:uppercase;">Single Course · 单课</div>
+    <div style="font-size:1.2rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.4rem;">想先体验单个实践小组？</div>
+    <div style="font-size:0.82rem; color:var(--muted); font-weight:300; margin-bottom:2.5rem; font-family:Noto Serif SC,serif;">选一个开始，社群会员可免费参加所有课程</div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; border:2px solid var(--ink);">
+      <!-- Course 1 -->
+      <div style="padding:2rem 1.8rem; border-right:1px solid var(--border); position:relative;">
+        <div style="font-family:Space Mono,monospace; font-size:0.58rem; letter-spacing:0.2em; color:var(--muted); margin-bottom:1rem;">COURSE 01</div>
+        <div style="font-size:1.1rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.4rem; line-height:1.3;">写作学习任何领域</div>
+        <div style="font-size:0.78rem; color:var(--muted); font-weight:300; margin-bottom:1.5rem; font-family:Noto Serif SC,serif;">打通内容创作系统</div>
+        <div style="font-size:1.8rem; font-weight:900; font-family:Space Mono,monospace; color:var(--ink);">¥299</div>
+      </div>
+      <!-- Course 2 -->
+      <div style="padding:2rem 1.8rem; background:var(--ink); position:relative;">
+        <div style="font-family:Space Mono,monospace; font-size:0.58rem; letter-spacing:0.2em; color:rgba(245,240,232,0.3); margin-bottom:1rem;">COURSE 02</div>
+        <div style="font-size:1.1rem; font-weight:900; font-family:Noto Serif SC,serif; margin-bottom:0.4rem; color:var(--bg); line-height:1.3;">极简一人商业</div>
+        <div style="font-size:0.78rem; color:rgba(245,240,232,0.4); font-weight:300; margin-bottom:1.5rem; font-family:Noto Serif SC,serif;">打通内容商业系统</div>
+        <div style="font-size:1.8rem; font-weight:900; font-family:Space Mono,monospace; color:var(--accent);">¥399</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREEDOM MANIFESTO + FOOTER -->
+<section style="padding:5rem 2rem 4rem; background:var(--ink);">
+  <div style="max-width:900px; margin:0 auto;">
+
+    <!-- Three freedoms -->
+    <div style="display:flex; flex-direction:column; gap:0; margin-bottom:5rem;">
+
+      <div style="padding:2.5rem 0; border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div style="font-family:Space Mono,monospace; font-size:0.62rem; letter-spacing:0.25em; color:var(--accent); margin-bottom:0.8rem;">Freedom from Noise</div>
+        <div style="font-size:clamp(1.2rem,3vw,1.8rem); font-weight:900; font-family:Noto Serif SC,serif; color:var(--bg); margin-bottom:0.5rem;">从喧嚣到倾听</div>
+        <div style="font-size:0.9rem; color:rgba(245,240,232,0.45); font-weight:300; font-family:Noto Serif SC,serif; line-height:1.8;">屏蔽竞争的声音，听见内心的鼓点。</div>
+      </div>
+
+      <div style="padding:2.5rem 0; border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div style="font-family:Space Mono,monospace; font-size:0.62rem; letter-spacing:0.25em; color:var(--accent); margin-bottom:0.8rem;">Freedom from Form</div>
+        <div style="font-size:clamp(1.2rem,3vw,1.8rem); font-weight:900; font-family:Noto Serif SC,serif; color:var(--bg); margin-bottom:0.5rem;">从规训到流动</div>
+        <div style="font-size:0.9rem; color:rgba(245,240,232,0.45); font-weight:300; font-family:Noto Serif SC,serif; line-height:1.8;">冲破形式的堤坝，让天赋自由涌现。</div>
+      </div>
+
+      <div style="padding:2.5rem 0;">
+        <div style="font-family:Space Mono,monospace; font-size:0.62rem; letter-spacing:0.25em; color:var(--accent); margin-bottom:0.8rem;">Freedom to Survive</div>
+        <div style="font-size:clamp(1.2rem,3vw,1.8rem); font-weight:900; font-family:Noto Serif SC,serif; color:var(--bg); margin-bottom:0.5rem;">从谋生到栖居</div>
+        <div style="font-size:0.9rem; color:rgba(245,240,232,0.45); font-weight:300; font-family:Noto Serif SC,serif; line-height:1.8;">财富是见证，创作是存在方式。</div>
+      </div>
+
+    </div>
+
+    <!-- Bottom line -->
+    <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+      <div style="font-size:1rem; font-weight:700; font-family:Noto Serif SC,serif; color:rgba(245,240,232,0.5);">做热爱的事，顺便赚钱。</div>
+      <div style="font-family:Space Mono,monospace; font-size:0.6rem; letter-spacing:0.15em; color:rgba(245,240,232,0.25);">© 2026 自由创作者之路 by 云不见</div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const days = [
+  {
+    num: 0,
+    tag: "THE CALL · 天命之召",
+    journey: "牧羊少年做了一个反复出现的梦，那是他的天命之召。",
+    title: "公开发表 · Create First",
+    desc: "天命不是等来的，是被召唤出来的。你的第一篇发表，就是你回应召唤的那一刻。",
+    details: [
+      "不需要准备好，Santiago 出发时也只是个普通牧羊少年。",
+      "公开发表本身会产生清晰度——写下来，你才知道自己真正在想什么。",
+      "这不是终点，是起点。发表之后，真正的旅程才刚刚开始。"
+    ],
+    action: "今天发布你的第一篇内容，无论平台、无论长短，先发出去",
+    status: "active"
+  },
+  {
+    num: 1,
+    tag: "THE RESISTANCE · 内阻力",
+    journey: "少年犹豫了——要不要放弃羊群，踏上未知的旅途？",
+    title: "内阻力 · 核心是不要限制自己",
+    desc: "我们会找各种理由和借口去限制自己做某件事，这就是内阻力。它不是敌人，是信号。",
+    details: [
+      "评判标准：你当下的想法是更靠近目标，还是远离目标？",
+      "如果是远离，那就是内阻力；如果是靠近，那就是真实的困难。",
+      "Santiago 的内阻力是恐惧失去已有的一切——你的内阻力是什么？"
+    ],
+    action: "写下你今天最大的内阻力，并问自己：它让我靠近还是远离我真正想要的？",
+    status: "locked"
+  },
+  {
+    num: 2,
+    tag: "THE BEGINNER'S MIND · 即时思考",
+    journey: "少年遇见老国王，学会用初学者之眼看待世界。",
+    title: "写作即思考 · 整个方法论的前提",
+    desc: "老国王说：初学者的运气，是宇宙对你说「去吧」的方式。写作，是你向宇宙证明你在认真思考。",
+    details: [
+      "你只有写得清楚，才意味着你想得清楚。",
+      "就像3岁小孩拿起画笔，不需要学过什么课程，只是自然地涂画。",
+      "这是一个从「知道」到「做到」，再到「改变命运」的路径。"
+    ],
+    action: "用300字写下你对某件事当下最真实的看法，不要润色，先写出来",
+    status: "locked"
+  },
+  {
+    num: 3,
+    tag: "THE DESERT · 最大困惑",
+    journey: "少年穿越撒哈拉沙漠，在极度不确定中学会倾听大地的语言。",
+    title: "从最大的困惑出发",
+    desc: "沙漠不会告诉你路在哪里，但它会让你学会提问。你最大的困惑，是你最真实的出发点。",
+    details: [
+      "相比研究各种爆款和流量，我们要研究的是「自己最大的好奇心」。",
+      "识别你日常的「惯性语言」，因为语言会反映思维的盲区。",
+      "从自己出发，你会越写越顺心、越顺利，由内而外地感受到满足。"
+    ],
+    action: "写出你最近最困惑的一个真实问题，不用解答它，只需要把它写清楚",
+    status: "locked"
+  },
+  {
+    num: 4,
+    tag: "THE OASIS · 大量输入",
+    journey: "少年在沙漠绿洲停留，大量吸收、等待时机、积蓄能量。",
+    title: "大量主题性输入，策展与AI辅助",
+    desc: "绿洲是旅途中的充能站。通过大量输入与深入阅读，直到忍不住「有自己的话要说」。",
+    details: [
+      "碎片化收藏容易给人「学会了」的错觉——要把点说透，把内容与生活串联起来。",
+      "在不同领域建立链接，神经元会更强壮，举一反三的能力也会更强。",
+      "用AI作为策展助手：把你的困惑告诉它，让它帮你找到你可能忽视的重要认知。"
+    ],
+    action: "围绕你的困惑，深度阅读3篇相关内容，并用自己的话写下核心洞见",
+    status: "locked"
+  },
+  {
+    num: 5,
+    tag: "THE ALCHEMIST · 最小框架",
+    journey: "少年遇见炼金术士，学会了如何从铅中炼出金——用最少的知识撬动最大的理解。",
+    title: "最小可用框架 · 先知道自己不知道什么",
+    desc: "炼金术士说：世界上只有一种方法可以学会——通过行动。最小框架，是让你立刻能行动的地图。",
+    details: [
+      "你得先知道自己不知道什么，才能判断哪20%的知识最关键。",
+      "先提供背景（你目前对困惑的认知），然后向AI追问：有什么我容易忽略的重要认知？",
+      "只有高质量的提问才有高质量的回答，背景信息就是提问质量的核心。"
+    ],
+    action: "向AI提问：「关于X，我目前的认知是Y，有什么我容易忽略但非常重要的视角？」",
+    status: "locked"
+  },
+  {
+    num: 6,
+    tag: "THE SOUL OF THE WORLD · 联系网络",
+    journey: "少年学会与世界之魂对话——万物之间存在隐藏的语言与联系。",
+    title: "建立联系网络",
+    desc: "世界之魂是万物之间的联系。你的写作，就是你在这张网络上留下的节点。",
+    details: [
+      "跨领域联系是创造力的来源——把新学到的内容与你已有的认知体系对话。",
+      "用写作来检验这些联系是否真实成立：能写清楚，才是真的理解了。",
+      "每一个联系，都是下一篇文章的种子。"
+    ],
+    action: "写一篇短文，把你这几天学到的内容与你生活中的某件事联系起来",
+    status: "locked"
+  },
+  {
+    num: 7,
+    tag: "THE TREASURE · 迭代复利",
+    journey: "少年回到出发地，才发现宝藏一直就在那里——但他必须经历整段旅程才能看见它。",
+    title: "迭代复利 · 可持续循环系统",
+    desc: "旅程的终点，是新旅程的起点。回到Day 0，但你已经不是原来的你——宝藏在每一次循环中越来越清晰。",
+    details: [
+      "复利不是线性增长，是螺旋式加深——每一次循环都在更深的层次上展开。",
+      "每一次迭代，你的内阻力在变，你的困惑在变，你的框架在变。",
+      "这就是∞的意义：不是重复，是一个越来越接近自己天命的过程。"
+    ],
+    action: "回顾这7天，写下你最重要的一个认知变化，然后发布它——新的循环开始了",
+    status: "locked"
+  }
+];
+
+const flowNodes = [
+  { num: 0, label: "公开\n发表", highlight: true },
+  { num: 1, label: "内阻力" },
+  { num: 2, label: "写作\n思考" },
+  { num: 3, label: "最大\n困惑" },
+  { num: 4, label: "大量\n输入" },
+  { num: 5, label: "最小\n框架" },
+  { num: 6, label: "联系\n网络" },
+  { num: 7, label: "迭代\n复利" },
+];
+
+// Render days
+const grid = document.getElementById('days-grid');
+days.forEach((day, i) => {
+  const card = document.createElement('div');
+  card.className = `day-card${day.status === 'active' ? ' active' : ''}${day.status === 'locked' ? ' locked' : ''}`;
+  card.innerHTML = `
+    <div class="day-number-col">
+      <div class="day-label">DAY</div>
+      <div class="day-num">${day.num}</div>
+      <div class="day-status ${day.status === 'done' ? 'done' : day.status === 'active' ? 'active-dot' : ''}">
+        ${day.status === 'done' ? '✓' : day.status === 'active' ? '●' : '○'}
+      </div>
+    </div>
+    <div class="day-content">
+      <div class="day-tag">${day.tag}</div>
+      <div class="day-journey">${day.journey}</div>
+      <div class="day-title">${day.title}</div>
+      <div class="day-desc">${day.desc}</div>
+      <div class="day-detail">
+        <ul class="detail-list">
+          ${day.details.map(d => `<li>${d}</li>`).join('')}
+        </ul>
+        <div class="day-action">今日行动：${day.action} →</div>
+      </div>
+    </div>
+  `;
+  card.addEventListener('click', () => {
+      document.querySelectorAll('.day-card').forEach(c => {
+        c.classList.remove('active');
+        if (c !== card) c.classList.add('locked');
+      });
+      card.classList.remove('locked');
+      card.classList.add('active');
+    });
+  grid.appendChild(card);
+});
+
+// Render flow nodes
+const flowEl = document.getElementById('flow-nodes');
+flowNodes.forEach((node, i) => {
+  const wrap = document.createElement('div');
+  wrap.style.display = 'flex';
+  wrap.style.alignItems = 'center';
+
+  const nodeEl = document.createElement('div');
+  nodeEl.className = 'flow-node';
+  nodeEl.innerHTML = `
+    <div class="node-circle ${node.highlight ? 'highlight' : ''}">${node.num}</div>
+    <div class="node-label">${node.label.replace('\n', '<br>')}</div>
+  `;
+  wrap.appendChild(nodeEl);
+
+  if (i < flowNodes.length - 1) {
+    const arrow = document.createElement('div');
+    arrow.className = 'flow-arrow';
+    arrow.textContent = i === flowNodes.length - 2 ? '↩' : '→';
+    wrap.appendChild(arrow);
+  }
+
+  flowEl.appendChild(wrap);
+});
+
+// Nugget grids
+(function() {
+  // Gold side: 90% gold, 10% silver
+  const goldGrid = document.getElementById('nugget-gold');
+  const goldPattern = Array(25).fill('au').map((v, i) => i < 22 ? 'au' : 'ag-dim');
+  goldPattern.sort(() => Math.random() - 0.5);
+  goldPattern.forEach(type => {
+    const el = document.createElement('div');
+    el.className = `nugget ${type === 'au' ? 'au' : 'ag dim'}`;
+    el.textContent = type === 'au' ? 'Au' : 'Ag';
+    goldGrid.appendChild(el);
+  });
+
+  // Silver side: 10% gold, 90% silver
+  const silverGrid = document.getElementById('nugget-silver');
+  const silverPattern = Array(25).fill('ag').map((v, i) => i < 3 ? 'au' : 'ag');
+  silverPattern.sort(() => Math.random() - 0.5);
+  silverPattern.forEach(type => {
+    const el = document.createElement('div');
+    el.className = `nugget ${type === 'au' ? 'au' : 'ag'}`;
+    el.textContent = type === 'au' ? 'Au' : 'Ag';
+    silverGrid.appendChild(el);
+  });
+})();
+
+// Jung language toggle
+function showLang(lang) {
+  document.querySelectorAll('.jung-text').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.jung-btn').forEach(el => el.classList.remove('active'));
+  document.querySelector(`.jung-text.${lang}`).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Resistance diagram
+(function() {
+  const diagram = document.getElementById('res-diagram');
+  const satellites = document.getElementById('res-satellites');
+  const svg = document.getElementById('res-svg');
+
+  const nodes = [
+    { label: '合理化', sub: '我太忙了', angle: -40 },
+    { label: '拖延',   sub: '明天再开始', angle: 180 },
+    { label: '制造麻烦', sub: '生病 / 戏剧化', angle: 40 },
+  ];
+
+  function layout() {
+    const W = diagram.offsetWidth || 780;
+    const H = diagram.offsetHeight || 320;
+    const cx = W / 2;
+    const cy = H / 2;
+    const r = Math.min(W, H) * 0.34;
+    const centerR = 55;
+    const nodeR = 48;
+
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.innerHTML = '';
+    satellites.innerHTML = '';
+
+    nodes.forEach(node => {
+      const rad = (node.angle * Math.PI) / 180;
+      const nx = cx + r * Math.cos(rad);
+      const ny = cy + r * Math.sin(rad);
+
+      // Arrow: from center edge to node edge
+      const dx = nx - cx, dy = ny - cy;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      const ux = dx/dist, uy = dy/dist;
+      const x1 = cx + ux * (centerR + 6);
+      const y1 = cy + uy * (centerR + 6);
+      const x2 = nx - ux * (nodeR + 6);
+      const y2 = ny - uy * (nodeR + 6);
+
+      // arrowhead marker
+      const markerId = `arrow-${node.angle}`;
+      const defs = svg.querySelector('defs') || svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg','defs'));
+      defs.innerHTML += `<marker id="${markerId}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#c85a1e"/>
+      </marker>`;
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+      line.setAttribute('stroke', '#c85a1e');
+      line.setAttribute('stroke-width', '2.5');
+      line.setAttribute('marker-end', `url(#${markerId})`);
+      svg.appendChild(line);
+
+      // Satellite node
+      const el = document.createElement('div');
+      el.className = 'res-node';
+      el.style.left = `${nx}px`;
+      el.style.top  = `${ny}px`;
+      el.style.transform = 'translate(-50%, -50%)';
+      el.innerHTML = `<div class="res-node-circle">
+        <div class="res-node-main">${node.label}</div>
+        <div class="res-node-sub">${node.sub}</div>
+      </div>`;
+      satellites.appendChild(el);
+    });
+  }
+
+  layout();
+  window.addEventListener('resize', layout);
+})();
+
+// Prologue typewriter
+const prologueData = [
+  { text: "圣地亚哥（男主）离开家乡，不是因为他知道自己要找什么。", cls: "" },
+  { text: "他只是感觉到了一个召唤。", cls: "bold" },
+  { spacer: true },
+  { text: "你现在的处境也一样。", cls: "accent" },
+  { spacer: true },
+  { text: "阅读，收藏，视频，播客…始终在学习——", cls: "" },
+  { text: "但总觉得什么都没真正「进入」自己。", cls: "" },
+  { text: "知识在脑子外面转，就是进不来。", cls: "bold" },
+  { spacer: true },
+  { quote: true, text: "炼金术士说：真正的炼金，不是把铅变成金子，是把自己变成能理解金子的人。" },
+  { spacer: true },
+  { text: "写作，就是这个变化发生的地方。", cls: "accent bold" },
+];
+
+const prologueContainer = document.getElementById('prologue-lines');
+
+// Build DOM elements first (hidden)
+const prologueEls = [];
+
+prologueData.forEach(item => {
+  if (item.spacer) {
+    const sp = document.createElement('div');
+    sp.className = 'prologue-spacer';
+    sp.style.display = 'none';
+    prologueContainer.appendChild(sp);
+    prologueEls.push({ type: 'spacer', el: sp });
+    return;
+  }
+  if (item.quote) {
+    const bq = document.createElement('div');
+    bq.className = 'prologue-blockquote';
+    bq.style.opacity = '0';
+    const lines = item.text.split('\n');
+    bq.innerHTML = `<p><span class="tw-target"></span></p>`;
+    prologueContainer.appendChild(bq);
+    prologueEls.push({ type: 'quote', el: bq, lines });
+    return;
+  }
+  const el = document.createElement('div');
+  el.className = `prologue-line${item.cls ? ' ' + item.cls : ''}`;
+  el.style.opacity = '0';
+  el.style.transform = 'none';
+  el.innerHTML = '<span class="tw-target"></span>';
+  prologueContainer.appendChild(el);
+  prologueEls.push({ type: 'line', el, text: item.text });
+});
+
+function typeText(spanEl, text, speed, cb) {
+  let i = 0;
+  spanEl.textContent = '';
+  function tick() {
+    if (i < text.length) {
+      spanEl.textContent += text[i++];
+      setTimeout(tick, speed);
+    } else {
+      if (cb) cb();
+    }
+  }
+  tick();
+}
+
+function runPrologue(index) {
+  if (index >= prologueEls.length) return;
+  const item = prologueEls[index];
+  const next = () => runPrologue(index + 1);
+
+  if (item.type === 'spacer') {
+    item.el.style.display = '';
+    setTimeout(next, 200);
+    return;
+  }
+
+  if (item.type === 'line') {
+    item.el.style.opacity = '1';
+    const span = item.el.querySelector('.tw-target');
+    typeText(span, item.text, 28, () => setTimeout(next, 80));
+    return;
+  }
+
+  if (item.type === 'quote') {
+    item.el.style.opacity = '1';
+    item.el.style.transition = 'opacity 0.3s';
+    const span = item.el.querySelector('.tw-target');
+    const fullText = item.lines.join(' ');
+    typeText(span, fullText, 28, () => {
+      // After typing, render with bold on the key phrase
+      const raw = item.lines[0];
+      const boldPhrase = '是把自己变成能理解金子的人。';
+      const rendered = raw.replace(boldPhrase, `<strong>${boldPhrase}</strong>`);
+      span.innerHTML = rendered;
+      setTimeout(next, 120);
+    });
+  }
+}
+
+// Trigger when section scrolls into view
+const prologueObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      setTimeout(() => runPrologue(0), 300);
+      prologueObserver.disconnect();
+    }
+  });
+}, { threshold: 0.2 });
+
+prologueObserver.observe(document.getElementById('prologue'));
+
+// Progress bar
+window.addEventListener('scroll', () => {
+  const totalHeight = document.body.scrollHeight - window.innerHeight;
+  const progress = (window.scrollY / totalHeight) * 100;
+  document.getElementById('progress').style.width = progress + '%';
+});
+
+function scrollToDays() {
+  document.getElementById('days-section').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
