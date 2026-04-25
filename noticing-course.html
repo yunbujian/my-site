@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>做一些AI不擅长的事 · Noticing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0c09;
+    --bg2: #161410;
+    --bg3: #1e1a14;
+    --ink: #f5f0e8;
+    --accent: #c85a1e;
+    --gold: #b8960c;
+    --muted: #6a6258;
+    --border: rgba(245,240,232,0.08);
+    --serif: 'Noto Serif SC', serif;
+    --mono: 'Space Mono', monospace;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    line-height: 1.7;
+    padding-top: 52px;
+  }
+
+  /* noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+  }
+
+  /* progress bar */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: var(--accent); z-index: 1001; transition: width 0.1s;
+    width: 0;
+  }
+
+  /* TOP BAR */
+  #top-bar {
+    position: fixed; top: 0; left: 0; right: 0; height: 52px;
+    z-index: 1000; display: flex; align-items: center; justify-content: center;
+    background: rgba(14,12,9,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  #top-bar-inner {
+    width: 100%; max-width: 900px; padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  #top-title { display: flex; flex-direction: column; gap: 1px; }
+  #top-title .zh { font-size: 0.82rem; font-weight: 900; color: var(--ink); letter-spacing: 0.05em; }
+  #top-title .en { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
+  .back-btn {
+    font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.15em;
+    color: var(--muted); text-decoration: none;
+    border: 1px solid rgba(245,240,232,0.1);
+    padding: 0.35rem 0.8rem; border-radius: 3px; transition: all 0.2s;
+  }
+  .back-btn:hover { color: var(--ink); border-color: rgba(245,240,232,0.3); }
+
+  /* HERO */
+  .hero {
+    min-height: calc(100vh - 52px);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 2rem 4rem;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* star field */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 20%, rgba(245,240,232,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 8%, rgba(245,240,232,0.2) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 45% 55%, rgba(200,90,30,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 40%, rgba(245,240,232,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 78%, rgba(245,240,232,0.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 90%, rgba(184,150,12,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 60%, rgba(245,240,232,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 70%, rgba(245,240,232,0.3) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .hero-inner { max-width: 900px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.3em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5.5vw, 4.2rem);
+    font-weight: 900; line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+  }
+  .hero-title .en-title {
+    display: block;
+    font-family: var(--mono);
+    font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+  .hero-title .accent { color: var(--accent); }
+  .hero-title .gold { color: var(--gold); }
+
+  .hero-sub {
+    font-size: 1rem; color: rgba(245,240,232,0.45);
+    font-weight: 300; max-width: 480px;
+    margin-bottom: 3rem; line-height: 1.9;
+  }
+
+  .hero-meta {
+    display: flex; gap: 0; flex-wrap: wrap;
+    border: 1px solid var(--border);
+    margin-bottom: 3rem; max-width: 480px;
+  }
+  .hero-meta-item {
+    flex: 1; min-width: 120px;
+    padding: 0.8rem 1.2rem;
+    border-right: 1px solid var(--border);
+  }
+  .hero-meta-item:last-child { border-right: none; }
+  .meta-label { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.3rem; text-transform: uppercase; }
+  .meta-val { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+
+  .hero-cta { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
+  .btn-primary {
+    display: inline-block;
+    padding: 0.9rem 2.5rem;
+    background: var(--accent);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    border: none;
+  }
+  .btn-primary:hover {
+    background: var(--ink); color: var(--bg);
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--accent);
+  }
+  .hero-or {
+    font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.15em; color: rgba(245,240,232,0.22);
+    cursor: pointer;
+  }
+  .hero-or:hover { color: var(--muted); }
+
+  /* THREE PILLARS */
+  .pillars-section {
+    padding: 5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .pillars-inner { max-width: 900px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.3em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 900; line-height: 1.15; margin-bottom: 3rem;
+  }
+  .section-title em { color: var(--accent); font-style: normal; }
+
+  .pillars-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .pillar {
+    padding: 2.5rem 1.8rem;
+    border-right: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .pillar:last-child { border-right: none; }
+  .pillar:hover { background: rgba(245,240,232,0.03); }
+
+  .pillar-letter {
+    font-family: var(--mono); font-size: 5rem; font-weight: 700;
+    line-height: 1; color: rgba(245,240,232,0.04);
+    position: absolute; right: 1rem; top: 1rem;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .pillar:hover .pillar-letter { color: rgba(245,240,232,0.07); }
+
+  .pillar-num {
+    font-family: var(--mono); font-size: 0.55rem;
+    letter-spacing: 0.2em; color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .pillar-name {
+    font-size: 1.5rem; font-weight: 900;
+    margin-bottom: 0.3rem;
+  }
+  .pillar-en {
+    font-family: var(--mono); font-size: 0.65rem;
+    letter-spacing: 0.15em; color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+  .pillar-desc {
+    font-size: 0.82rem; color: rgba(245,240,232,0.5);
+    font-weight: 300; line-height: 1.85;
+  }
+  .pillar-noticing {
+    margin-top: 1.2rem; padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.08em; color: var(--gold);
+    line-height: 1.7;
+  }
+
+  /* AI VS HUMAN */
+  .ai-section {
+    padding: 5rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .ai-inner { max-width: 900px; margin: 0 auto; }
+
+  .ai-compare {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--border); margin-bottom: 2rem;
+  }
+  .ai-col { padding: 2rem 1.8rem; }
+  .ai-col.left { border-right: 1px solid var(--border); }
+  .ai-col-tag {
+    font-family: var(--mono); font-size: 0.55rem;
+    letter-spacing: 0.2em; color: var(--muted);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .ai-col-tag::before {
+    content: ''; display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+  .ai-col.left .ai-col-tag::before { background: var(--muted); }
+  .ai-col.right .ai-col-tag::before { background: var(--accent); }
+  .ai-col-title { font-size: 1.1rem; font-weight: 900; margin-bottom: 1.2rem; }
+  .ai-col.right .ai-col-title { color: var(--accent); }
+  .ai-item {
+    font-size: 0.82rem; font-weight: 300;
+    color: rgba(245,240,232,0.5); line-height: 1.8;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: baseline; gap: 0.6rem;
+  }
+  .ai-item:last-child { border-bottom: none; }
+  .ai-col.right .ai-item { color: rgba(245,240,232,0.7); }
+  .ai-mark { font-family: var(--mono); font-size: 0.6rem; flex-shrink: 0; }
+  .ai-col.left .ai-mark { color: rgba(245,240,232,0.2); }
+  .ai-col.right .ai-mark { color: var(--accent); }
+
+  /* MANIFESTO */
+  .manifesto-section {
+    padding: 5rem 2rem;
+    background: var(--bg3); border-bottom: 1px solid var(--border);
+  }
+  .manifesto-inner { max-width: 900px; margin: 0 auto; }
+  .manifesto-body {
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .manifesto-line {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 48px 1fr;
+    gap: 1.5rem; align-items: start;
+  }
+  .manifesto-line:last-child { border-bottom: none; }
+  .manifesto-idx {
+    font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.15em; color: var(--muted); padding-top: 0.2rem;
+  }
+  .manifesto-text {
+    font-size: clamp(1rem, 2.2vw, 1.3rem);
+    font-weight: 300; line-height: 1.85;
+    color: rgba(245,240,232,0.6);
+  }
+  .manifesto-text strong { color: var(--ink); font-weight: 700; }
+  .manifesto-text em { color: var(--accent); font-style: normal; }
+
+  /* RICHARD FEYNMAN QUOTE */
+  .quote-strip {
+    padding: 4rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .quote-strip-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; gap: 2rem; align-items: flex-start;
+  }
+  .quote-strip-deco {
+    font-size: 4rem; color: var(--accent); font-family: Georgia, serif;
+    line-height: 0.8; flex-shrink: 0; opacity: 0.6;
+  }
+  .quote-strip-text {
+    font-size: 1.05rem; font-weight: 300;
+    color: rgba(245,240,232,0.55); line-height: 1.9;
+  }
+  .quote-strip-text strong { color: var(--ink); font-weight: 700; }
+  .quote-strip-source {
+    font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.15em; color: var(--muted);
+    margin-top: 0.8rem;
+  }
+
+  /* NOTICING EXPLAINED */
+  .noticing-section {
+    padding: 5rem 2rem; border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .noticing-inner { max-width: 900px; margin: 0 auto; }
+  .noticing-def {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 0; border: 1px solid var(--border);
+    margin-top: 2.5rem;
+  }
+  .noticing-item {
+    padding: 2rem 1.6rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .noticing-item:last-child { border-right: none; }
+  .noticing-icon {
+    font-family: var(--mono); font-size: 0.55rem;
+    letter-spacing: 0.25em; color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+  .noticing-head { font-size: 1rem; font-weight: 900; margin-bottom: 0.5rem; }
+  .noticing-body {
+    font-size: 0.8rem; color: rgba(245,240,232,0.45);
+    font-weight: 300; line-height: 1.85;
+  }
+
+  /* PRICING */
+  .pricing-section {
+    padding: 5rem 2rem; border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .pricing-inner { max-width: 900px; margin: 0 auto; }
+  .pricing-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; border: 1px solid var(--border); margin-top: 2.5rem;
+  }
+  .pricing-card {
+    padding: 2.5rem 2rem;
+    border-right: 1px solid var(--border);
+  }
+  .pricing-card:last-child { border-right: none; background: var(--bg3); }
+  .pricing-tag {
+    font-family: var(--mono); font-size: 0.55rem;
+    letter-spacing: 0.2em; color: var(--muted); margin-bottom: 1.2rem;
+  }
+  .pricing-name { font-size: 1.1rem; font-weight: 900; margin-bottom: 0.4rem; }
+  .pricing-name-en {
+    font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1.5rem;
+  }
+  .pricing-price {
+    font-family: var(--mono); font-size: 2.8rem; font-weight: 700;
+    color: var(--accent); line-height: 1; margin-bottom: 0.3rem;
+  }
+  .pricing-price-note {
+    font-family: var(--mono); font-size: 0.58rem;
+    letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1.8rem;
+  }
+  .pricing-features {
+    display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2rem;
+  }
+  .pricing-feat {
+    font-size: 0.82rem; font-weight: 300;
+    color: rgba(245,240,232,0.55); line-height: 1.7;
+    display: flex; gap: 0.6rem; align-items: baseline;
+  }
+  .pricing-feat::before {
+    content: '—'; color: var(--border); flex-shrink: 0;
+    font-family: var(--mono); font-size: 0.7rem;
+  }
+  .pricing-btn {
+    display: inline-block; width: 100%; text-align: center;
+    padding: 0.8rem 1.5rem;
+    font-family: var(--serif); font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s;
+    text-decoration: none; border: none;
+  }
+  .pricing-btn.primary { background: var(--accent); color: var(--ink); }
+  .pricing-btn.primary:hover { background: var(--ink); color: var(--bg); box-shadow: 4px 4px 0 var(--accent); transform: translateY(-2px); }
+  .pricing-btn.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .pricing-btn.secondary:hover { background: var(--accent); color: var(--ink); transform: translateY(-2px); }
+
+  /* wechat popup */
+  #wechat-popup {
+    display: none; width: 100%; text-align: center;
+    padding: 0.8rem; background: rgba(200,90,30,0.1);
+    border: 1px solid rgba(200,90,30,0.3);
+    font-family: var(--mono); font-size: 0.75rem;
+    letter-spacing: 0.1em; color: var(--accent); margin-top: 0.5rem;
+  }
+  #wechat-popup2 {
+    display: none; width: 100%; text-align: center;
+    padding: 0.8rem; background: rgba(200,90,30,0.1);
+    border: 1px solid rgba(200,90,30,0.3);
+    font-family: var(--mono); font-size: 0.75rem;
+    letter-spacing: 0.1em; color: var(--accent); margin-top: 0.5rem;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 3rem 2rem; background: var(--bg);
+    display: flex; justify-content: center;
+  }
+  .footer-inner {
+    max-width: 900px; width: 100%;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-left { font-size: 0.85rem; font-weight: 700; color: rgba(245,240,232,0.3); }
+  .footer-right { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.15em; color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+    .pillar { border-right: none; border-bottom: 1px solid var(--border); }
+    .ai-compare { grid-template-columns: 1fr; }
+    .ai-col.left { border-right: none; border-bottom: 1px solid var(--border); }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .pricing-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .noticing-def { grid-template-columns: 1fr; }
+    .noticing-item { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div id="top-bar">
+  <div id="top-bar-inner">
+    <div id="top-title">
+      <span class="zh">Noticing · 做一些AI不擅长的事</span>
+      <span class="en">In the Age of Generation · 33 Days</span>
+    </div>
+    <a class="back-btn" href="index.html">← 返回主页</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Practice Group · 实践小组 · 第二期</div>
+    <h1 class="hero-title">
+      <span class="en-title">Noticing: In the Age of Generation</span>
+      做一些<span class="accent">AI</span><br>不擅长的事
+    </h1>
+    <p class="hero-sub">
+      AI 在速度、准确和效率三个维度已经吊打 99% 的人。<br>
+      那么人的空间在哪里？<br>
+      我想是在于：<span style="color:var(--ink); font-weight:700;">意义、玩耍、信号。</span>
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="meta-label">Duration</div>
+        <div class="meta-val">33 天</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="meta-label">Start</div>
+        <div class="meta-val">5月5日</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="meta-label">Core</div>
+        <div class="meta-val">意义·玩耍·信号</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn-primary" href="#pricing">加 入 实 践 小 组 →</a>
+      <span class="hero-or" onclick="document.getElementById('pillars').scrollIntoView({behavior:'smooth'})">或，继续阅读 ↓</span>
+    </div>
+  </div>
+</section>
+
+<!-- THREE PILLARS -->
+<section class="pillars-section" id="pillars">
+  <div class="pillars-inner">
+    <div class="section-eyebrow">Three Dimensions · 三个核心议题</div>
+    <div class="section-title">AI 不擅长的<em>三件事</em></div>
+
+    <div class="pillars-grid">
+      <div class="pillar">
+        <div class="pillar-letter">M</div>
+        <div class="pillar-num">01 · MEANING</div>
+        <div class="pillar-name">意义</div>
+        <div class="pillar-en">What is meaning?</div>
+        <div class="pillar-desc">
+          AI 从不会思考「做这件事是否有意义」——它接到指令就行动。只有意义才能生发出目标和愿景，才能让你拥有 AI 永远没有的东西：一个属于你的故事，一个你想要去的未来。
+        </div>
+        <div class="pillar-noticing">
+          Noticing → 注意到什么对你来说是重要的
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-letter">P</div>
+        <div class="pillar-num">02 · PLAY</div>
+        <div class="pillar-name">玩耍</div>
+        <div class="pillar-en">Purposeless exploration</div>
+        <div class="pillar-desc">
+          AI 无法毫无目的地玩耍。玩耍状态下前额叶以低风险方式运行所有可能性，释放 BDNF，触发神经可塑性，重塑大脑。这是创造力的酝酿阶段——AI 非常注重效率，所以你才要「浪费时间」。
+        </div>
+        <div class="pillar-noticing">
+          Noticing → 无目的玩耍需要开放的注意力
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-letter">S</div>
+        <div class="pillar-num">03 · SIGNAL</div>
+        <div class="pillar-name">信号</div>
+        <div class="pillar-en">What do you choose to amplify?</div>
+        <div class="pillar-desc">
+          AI 的输出是平均知识。信号来自 Michael Spence 的 signaling theory：带有差异化成本的、难以伪造的归属标记。你的品位、判断、策展——这些才是你真正的信号。
+        </div>
+        <div class="pillar-noticing">
+          Noticing → 注意到什么，并选择放大什么
+        </div>
+      </div>
+    </div>
+
+    <!-- Noticing definition -->
+    <div style="padding:1.5rem 2rem; border:1px solid var(--border); border-top:none; background:rgba(184,150,12,0.04);">
+      <div style="font-family:var(--mono); font-size:0.58rem; letter-spacing:0.2em; color:var(--gold); margin-bottom:0.6rem;">NOTICING · 什么是注意</div>
+      <div style="font-size:0.88rem; color:rgba(245,240,232,0.55); font-weight:300; line-height:1.9;">
+        无目的玩耍需要开放的注意力 · 品位即注意到细节 · 信号即注意到什么并选择放大什么
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI VS HUMAN -->
+<section class="ai-section">
+  <div class="ai-inner">
+    <div class="section-eyebrow">The Question · 核心追问</div>
+    <div class="section-title">AI 吊打人类的三个维度<br><span style="font-size:0.6em; color:var(--muted);">那人的空间，究竟在哪里？</span></div>
+
+    <div class="ai-compare">
+      <div class="ai-col left">
+        <div class="ai-col-tag">AI 极其擅长</div>
+        <div class="ai-col-title">速度 · 准确 · 效率</div>
+        <div class="ai-item"><span class="ai-mark">×</span>几秒内生成千字文章</div>
+        <div class="ai-item"><span class="ai-mark">×</span>不间断工作，永不疲倦</div>
+        <div class="ai-item"><span class="ai-mark">×</span>调用海量平均知识</div>
+        <div class="ai-item"><span class="ai-mark">×</span>遇到问题，立即解决</div>
+        <div class="ai-item"><span class="ai-mark">×</span>翻译、整理、规整文档</div>
+      </div>
+      <div class="ai-col right">
+        <div class="ai-col-tag">人类独有</div>
+        <div class="ai-col-title">意义 · 玩耍 · 信号</div>
+        <div class="ai-item"><span class="ai-mark">✓</span>思考「这件事对我意味着什么」</div>
+        <div class="ai-item"><span class="ai-mark">✓</span>无目的的具身探索和试错</div>
+        <div class="ai-item"><span class="ai-mark">✓</span>真实的失败经验与具身知识</div>
+        <div class="ai-item"><span class="ai-mark">✓</span>品位：筛选什么值得放大</div>
+        <div class="ai-item"><span class="ai-mark">✓</span>独一无二的人生故事与声音</div>
+      </div>
+    </div>
+
+    <div style="padding:1.4rem 1.8rem; border-left:3px solid var(--accent); background:rgba(200,90,30,0.05); font-size:0.88rem; color:rgba(245,240,232,0.6); line-height:1.9; font-weight:300;">
+      你如果和 AI 竞争它最擅长的事，你一定会输。<br>
+      <strong style="color:var(--ink);">你要进入一种无竞争的领域：你自己就是产品本身。</strong><br>
+      如何打磨你自己，几乎只能通过朴素的一个字一个字的创作才能发生。
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto-section">
+  <div class="manifesto-inner">
+    <div class="section-eyebrow">Manifesto · 创作者宣言</div>
+    <div class="section-title">我们<em>相信</em>什么</div>
+    <div class="manifesto-body">
+      <div class="manifesto-line">
+        <div class="manifesto-idx">01</div>
+        <div class="manifesto-text">创作不是发明。我们只是去<strong>发现我们本来就有的东西</strong>——从我们身体里本来就存在的那部分，我们去看见它。</div>
+      </div>
+      <div class="manifesto-line">
+        <div class="manifesto-idx">02</div>
+        <div class="manifesto-text">幸福不在未来某个达成目标的瞬间。幸福渗透进你每一天<strong>沉浸在创作里</strong>、去玩耍、去真正建造你热爱的项目的时刻。</div>
+      </div>
+      <div class="manifesto-line">
+        <div class="manifesto-idx">03</div>
+        <div class="manifesto-text">真实的经验天然具有<strong>改变性</strong>——它首先改变的第一个人就是你自己。我们唯一需要训练的是：<em>相信自己真实的经验。</em></div>
+      </div>
+      <div class="manifesto-line">
+        <div class="manifesto-idx">04</div>
+        <div class="manifesto-text">这个世界变得太快，我们无法追上所有变化。所以我们去抓那些<strong>不变的东西</strong>：意义、玩耍、信号——万变不离其宗。</div>
+      </div>
+      <div class="manifesto-line">
+        <div class="manifesto-idx">05</div>
+        <div class="manifesto-text">像<strong>科学家</strong>一样谨慎地做研究，用 AI 赋能；像<strong>艺术家</strong>一样去创作。<em>像科学家一样练习，像艺术家一样演奏。</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEYNMAN QUOTE -->
+<section class="quote-strip">
+  <div class="quote-strip-inner">
+    <div class="quote-strip-deco">❝</div>
+    <div>
+      <div class="quote-strip-text">
+        理查德·费曼，诺贝尔奖得主，终身保持<strong>玩耍精神</strong>。这种玩耍精神是他非常努力在自己身上持续培养的东西，是他能以不同方式看待世界、并在物理学领域做出重大发现的方式。<br><br>
+        如果你觉得玩耍是浪费时间，你就<strong>离 AI 更近了一步</strong>。因为 AI 非常注重效率，AI 从不休息。所以你才要休息，才要玩耍。
+      </div>
+      <div class="quote-strip-source">—— 来自课程内容</div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTICING SECTION -->
+<section class="noticing-section">
+  <div class="noticing-inner">
+    <div class="section-eyebrow">Core Practice · 核心练习</div>
+    <div class="section-title">什么是 <em>Noticing</em>？</div>
+    <p style="font-size:0.9rem; color:rgba(245,240,232,0.45); font-weight:300; line-height:1.9; max-width:560px;">
+      Noticing 不是一种技术，是一种注意力的质地。当你学会注意，你就拥有了 AI 永远无法复制的东西。
+    </p>
+    <div class="noticing-def">
+      <div class="noticing-item">
+        <div class="noticing-icon">ATTENTION · 注意力</div>
+        <div class="noticing-head">开放的注意力</div>
+        <div class="noticing-body">无目的玩耍需要开放的注意力——不带评判地让思维自由漫游，这是创造力的土壤。</div>
+      </div>
+      <div class="noticing-item">
+        <div class="noticing-icon">TASTE · 品位</div>
+        <div class="noticing-head">品位即注意到细节</div>
+        <div class="noticing-body">品位不是天赋，是训练出来的注意力。注意到别人忽略的细节，这就是你与众不同的声音。</div>
+      </div>
+      <div class="noticing-item">
+        <div class="noticing-icon">SIGNAL · 信号</div>
+        <div class="noticing-head">注意到什么，放大什么</div>
+        <div class="noticing-body">信号是你的策展能力——在信息洪流中，注意到什么值得被放大，这是人类最高级的判断力。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="section-eyebrow">Join · 加入</div>
+    <div class="section-title">选择你的<em>入口</em></div>
+    <div class="pricing-grid">
+
+      <!-- Single course -->
+      <div class="pricing-card">
+        <div class="pricing-tag">OPTION 01 · 单次加入</div>
+        <div class="pricing-name">本期实践小组</div>
+        <div class="pricing-name-en">Noticing · 33 Days</div>
+        <div class="pricing-price">¥399</div>
+        <div class="pricing-price-note">33天实践小组</div>
+        <div class="pricing-features">
+          <div class="pricing-feat">本期33天完整实践内容</div>
+          <div class="pricing-feat">意义·玩耍·信号三大议题深度探索</div>
+          <div class="pricing-feat">每日创作练习与社群支持</div>
+          <div class="pricing-feat">云不见全程陪跑</div>
+        </div>
+        <div onclick="document.getElementById('wechat-popup').style.display='block'; this.style.display='none';" class="pricing-btn secondary" style="cursor:pointer;">
+          加 入 本 期 →
+        </div>
+        <div id="wechat-popup">微信：yunbujian3 · 备注「Noticing」</div>
+      </div>
+
+      <!-- Community -->
+      <div class="pricing-card">
+        <div class="pricing-tag">OPTION 02 · 终身制 · 推荐</div>
+        <div class="pricing-name">FreeWriters 自由创作者社群</div>
+        <div class="pricing-name-en">Lifetime · All Courses Included</div>
+        <div class="pricing-price" style="color:var(--gold);">¥999</div>
+        <div class="pricing-price-note">终身制 · 仅限前100人 · 6月价格上涨</div>
+        <div class="pricing-features">
+          <div class="pricing-feat">包含所有实践小组，无限参与</div>
+          <div class="pricing-feat">写作学习任何领域 · 极简一人商业</div>
+          <div class="pricing-feat">本期 Noticing 免费包含</div>
+          <div class="pricing-feat">未来所有课程永久可看</div>
+          <div class="pricing-feat">社群：真实创作者的共振场域</div>
+        </div>
+        <div onclick="document.getElementById('wechat-popup2').style.display='block'; this.style.display='none';" class="pricing-btn primary" style="cursor:pointer;">
+          加 入 社 群 →
+        </div>
+        <div id="wechat-popup2">微信：yunbujian3 · 备注「社群」</div>
+      </div>
+
+    </div>
+
+    <!-- Why lifetime -->
+    <div style="margin-top:2rem; padding:1.8rem 2rem; border:1px solid var(--border); background:var(--bg3);">
+      <div style="font-family:var(--mono); font-size:0.58rem; letter-spacing:0.2em; color:var(--muted); margin-bottom:1rem;">WHY LIFETIME · 为什么做终身制</div>
+      <div style="font-size:0.88rem; color:rgba(245,240,232,0.5); line-height:1.95; font-weight:300;">
+        我相信生命有自己的节奏，最好的事情都是缓慢发生的。<strong style="color:var(--ink);">好酒需要时间，新酒与陈酿，不是度数的差别，是时间刻进去的层次。</strong><br><br>
+        做终身制，是为了能够保护这个生命发展的自然进程。社群是星与星的共振，光与光的传递，以此汇成一片星河，点亮整个世界。<br><br>
+        <em style="color:var(--gold);">慢即是快，即是顺。</em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">做热爱的事，顺便赚钱。</div>
+    <div class="footer-right">© 2026 自由创作者之路 by 云不见</div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  const total = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('progress').style.width = (window.scrollY / total * 100) + '%';
+});
+</script>
+</body>
+</html>
