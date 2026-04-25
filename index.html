@@ -2347,6 +2347,65 @@
   <div class="hero-infinite">∞</div>
 </section>
 
+<!-- NOTICING RECRUITMENT BANNER -->
+<section onclick="window.location.href='noticing-course.html'" style="cursor:pointer; padding:0; background:#0e0c09; border-bottom:2px solid var(--ink); position:relative; overflow:hidden;">
+
+  <!-- subtle star dots -->
+  <div style="position:absolute; inset:0; pointer-events:none;
+    background-image:
+      radial-gradient(1px 1px at 8% 30%, rgba(245,240,232,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 20%, rgba(184,150,12,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 70%, rgba(245,240,232,0.2) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 92% 60%, rgba(200,90,30,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 80%, rgba(245,240,232,0.15) 0%, transparent 100%);"></div>
+
+  <div style="max-width:900px; margin:0 auto; padding:2rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; position:relative; z-index:1;">
+
+    <!-- Left: badge + title -->
+    <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;">
+      <!-- Blinking dot -->
+      <div style="display:flex; align-items:center; gap:0.5rem; flex-shrink:0;">
+        <div style="width:8px; height:8px; border-radius:50%; background:#b8960c;
+          animation: blink 1.5s ease-in-out infinite;"></div>
+        <span style="font-family:'Space Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; color:#b8960c; text-transform:uppercase;">正在招募</span>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; color:rgba(245,240,232,0.25); margin-bottom:0.3rem;">NEW · 最新实践小组 · 5月5日开营</div>
+        <div style="font-size:clamp(0.95rem,2.2vw,1.2rem); font-weight:900; color:#f5f0e8; font-family:'Noto Serif SC',serif; line-height:1.2;">
+          做一些 AI 不擅长的事
+          <span style="font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:400; color:rgba(245,240,232,0.3); letter-spacing:0.08em; margin-left:0.5rem;">Noticing</span>
+        </div>
+        <div style="font-size:0.75rem; color:rgba(245,240,232,0.35); font-weight:300; margin-top:0.3rem; font-family:'Noto Serif SC',serif;">
+          意义 · 玩耍 · 信号 · 33天
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: price + CTA -->
+    <div style="display:flex; align-items:center; gap:1.5rem; flex-shrink:0;">
+      <div style="text-align:right;">
+        <div style="font-family:'Space Mono',monospace; font-size:0.5rem; letter-spacing:0.1em; color:rgba(184,150,12,0.6); margin-bottom:0.3rem;">4.28前预售价</div>
+        <div style="display:flex; align-items:baseline; gap:0.8rem; justify-content:flex-end;">
+          <div style="font-family:'Space Mono',monospace; font-size:1.6rem; font-weight:700; color:#b8960c; line-height:1;">¥299</div>
+          <div style="font-family:'Space Mono',monospace; font-size:1.4rem; font-weight:700; color:rgba(245,240,232,0.35); text-decoration:line-through; line-height:1;">¥399</div>
+        </div>
+        <div style="font-family:'Space Mono',monospace; font-size:0.5rem; letter-spacing:0.08em; color:rgba(245,240,232,0.2); margin-top:0.25rem;">4.28后恢复原价</div>
+      </div>
+      <div style="padding:0.6rem 1.4rem; background:#b8960c; color:#0e0c09; font-family:'Noto Serif SC',serif; font-size:0.85rem; font-weight:700; letter-spacing:0.1em; white-space:nowrap; transition:all 0.2s;" onmouseenter="this.style.background='#f5f0e8'" onmouseleave="this.style.background='#b8960c'">
+        了解详情 →
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+</style>
+
 <!-- PROLOGUE -->
 <section class="prologue" id="prologue">
   <div class="prologue-inner">
